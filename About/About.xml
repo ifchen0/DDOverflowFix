@@ -5,7 +5,7 @@
   <packageId>ifchen0.ddoverflowfix</packageId>
   <supportedVersions><li>1.6</li></supportedVersions>
   <url>https://steamcommunity.com/sharedfiles/filedetails/?id=3220299022</url>
-  <description>Unofficial fix for Dynamic Diplomacy - Continued (steamcommunity.com/sharedfiles/filedetails/?id=3220299022).
+  <description>Unofficial fix for Dynamic Diplomacy - Continued.
 
 1) Fixes this error during NPC conquest battles:
 System.OverflowException: Value was either too large or too small for an Int32.
