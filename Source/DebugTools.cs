@@ -27,6 +27,12 @@ namespace DDOverflowFix
         internal static ForcedArenaAI Forced = ForcedArenaAI.None;
         private static int rollIndex;
 
+        // With Deferred Raid Generation the arena is queued and InitArenaMap really runs about 20 s later. The debug
+        // action then leaves its mode here; the next InitArenaMap that actually runs applies it and jumps to the map.
+        internal static bool PendingArena;
+        internal static ForcedArenaAI PendingForced = ForcedArenaAI.None;
+        private static bool applyingPending;
+
         private static readonly MethodInfo RandRange = AccessTools.Method(typeof(Rand), nameof(Rand.Range), new[] { typeof(int), typeof(int) });
         private static readonly MethodInfo RollMethod = AccessTools.Method(typeof(Patch_InitArenaMap_ForcedRoll), nameof(Roll));
 
@@ -35,7 +41,31 @@ namespace DDOverflowFix
         public static MethodBase TargetMethod() =>
             AccessTools.Method(AccessTools.TypeByName("DynamicDiplomacy.IncidentWorker_NPCConquest"), "InitArenaMap");
 
-        public static void Prefix() => rollIndex = 0;
+        public static void Prefix()
+        {
+            rollIndex = 0;
+            if (PendingArena && Forced == ForcedArenaAI.None)
+            {
+                Forced = PendingForced;
+                applyingPending = true;
+            }
+        }
+
+        /// <summary>Runs after both a real InitArenaMap and one that another mod skipped (deferred).</summary>
+        public static void Postfix(object[] __args, bool __runOriginal)
+        {
+            if (!applyingPending)
+                return;
+            Forced = ForcedArenaAI.None;
+            applyingPending = false;
+            if (!__runOriginal)
+                return;
+            PendingArena = false;
+            PendingForced = ForcedArenaAI.None;
+            Map map = (__args[0] as MapParent)?.Map;
+            if (map != null)
+                CameraJumper.TryJump(map.Center, map);
+        }
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -162,6 +192,7 @@ namespace DDOverflowFix
             }
 
             var before = new HashSet<Map>(Find.Maps);
+            int deferredBefore = DeferredCount();
             Patch_InitArenaMap_ForcedRoll.Forced = mode;
             bool ok;
             try
@@ -175,6 +206,13 @@ namespace DDOverflowFix
             }
 
             Map created = Find.Maps.FirstOrDefault(m => !before.Contains(m));
+            if (ok && created == null && DeferredCount() > deferredBefore)
+            {
+                Patch_InitArenaMap_ForcedRoll.PendingArena = true;
+                Patch_InitArenaMap_ForcedRoll.PendingForced = mode;
+                Messages.Message("Conquest arena queued by Deferred Raid Generation; the camera jumps to it when it starts (after any raids queued before it).", MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
             if (!ok || created == null)
             {
                 Messages.Message("Conquest did not create an arena this time (no valid target, or target already has a map). Try again.", MessageTypeDefOf.RejectInput, false);
@@ -184,6 +222,14 @@ namespace DDOverflowFix
             if (mode == ForcedArenaAI.Shelling)
                 Messages.Message("Shelling AI requires both factions to be Industrial or higher; otherwise it falls back to factional war AI.", MessageTypeDefOf.NeutralEvent, false);
             CameraJumper.TryJump(created.Center, created);
+        }
+
+        /// <summary>Number of groups queued by Deferred Raid Generation, or 0 when that mod is not loaded.</summary>
+        private static int DeferredCount()
+        {
+            System.Type type = AccessTools.TypeByName("DeferredRaidGeneration.DeferredRaids");
+            object instance = type == null ? null : Traverse.Create(type).Property("Instance").GetValue();
+            return instance == null ? 0 : Traverse.Create(instance).Field("pending").Property("Count").GetValue<int>();
         }
 
         private static bool TryJumpToLatestArena()
