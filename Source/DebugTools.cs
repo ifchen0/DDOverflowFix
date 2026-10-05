@@ -211,6 +211,8 @@ namespace DDOverflowFix
                 Patch_InitArenaMap_ForcedRoll.PendingArena = true;
                 Patch_InitArenaMap_ForcedRoll.PendingForced = mode;
                 Messages.Message("Conquest arena queued by Deferred Raid Generation; the camera jumps to it when it starts (after any raids queued before it).", MessageTypeDefOf.NeutralEvent, false);
+                if (mode == ForcedArenaAI.Shelling)
+                    Messages.Message("Shelling AI requires both factions to be Industrial or higher; otherwise it falls back to factional war AI.", MessageTypeDefOf.NeutralEvent, false);
                 return;
             }
             if (!ok || created == null)

@@ -1,0 +1,31 @@
+Unofficial fix for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3220299022]Dynamic Diplomacy - Continued[/url].
+
+[h2]1) OverflowException in NPC conquest battles[/h2]
+Fixes this error:
+[code]System.OverflowException: Value was either too large or too small for an Int32.
+  at DynamicDiplomacy.IncidentWorker_NPCConquest.InitArenaMap[/code]
+
+[b]Cause:[/b] InitArenaMap builds a raid seed with [i]int.Parse(tickCreated.ToString() + map.uniqueID)[/i]. In long-running saves the concatenated number exceeds Int32.MaxValue, so roughly 37.5% of NPC conquest battles throw before any AI is assigned. Both armies then spawn without orders and wander off the map, and the battle is resolved by auto-calc after timeout (in semi-simulation mode, the arena retries and keeps spawning more pawns).
+
+[b]Fix:[/b] A Harmony transpiler replaces that single int.Parse call. Values that fit in Int32 are unchanged; larger values are folded deterministically into range.
+
+[h2]2) Better "basic AI" for arena battles[/h2]
+In the original basic AI branch, both sides are ordered to defend the map center, which turns every fight into a melee brawl and cripples ranged / high-tech factions. With this patch:
+[list]
+[*]Attacker hunts down and engages the nearest defenders (using Dynamic Diplomacy's own raid AI).
+[*]Defender holds a position near its own entry, at least 14 cells away from the map edge (same position finder the siege/shelling AI uses).
+[/list]
+Shelling AI and Factional War AI branches are unchanged. If anything fails, it falls back to the original behavior.
+
+[h2]Notes[/h2]
+[list]
+[*]Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.
+[*]Load after Harmony and Dynamic Diplomacy - Continued.
+[*]If the original mod fixes the overflow, a warning appears in the log.
+[/list]
+
+[h2]Dev tools[/h2]
+With Development mode on, [b]Debug actions > "Dynamic Diplomacy Fix"[/b] can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / random) for quick testing.
+
+[hr][/hr]
+This mod was developed with the help of AI coding tools (Claude Code). Full source code is included in the Source folder and on [url=https://github.com/ifchen0/DDOverflowFix]GitHub[/url] for review.
