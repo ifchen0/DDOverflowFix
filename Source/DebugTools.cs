@@ -120,6 +120,36 @@ namespace DDOverflowFix
                 Messages.Message("No active Dynamic Diplomacy arena map.", MessageTypeDefOf.RejectInput, false);
         }
 
+        [DebugAction(Category, "Semi-sim: time out battle sites now", allowedGameStates = AllowedGameStates.Playing)]
+        private static void TimeOutBattleSites()
+        {
+            int count = 0;
+            foreach (MapParent arena in Find.WorldObjects.MapParents.Where(p => p.def.defName.StartsWith("NPCArena")).ToList())
+            {
+                var t = Traverse.Create(arena);
+                if (arena.HasMap || t.Field("isCombatEnded").GetValue<bool>())
+                    continue;
+                t.Field("tickCreated").SetValue(Find.TickManager.TicksGame - 120001);
+                count++;
+            }
+            Messages.Message($"{count} battle site(s) without a map will time out within a second of game time.", MessageTypeDefOf.NeutralEvent, false);
+        }
+
+        [DebugAction(Category, "Semi-sim: time out arena fights now", allowedGameStates = AllowedGameStates.Playing)]
+        private static void TimeOutArenaFights()
+        {
+            int count = 0;
+            foreach (MapParent arena in Find.WorldObjects.MapParents.Where(p => p.def.defName.StartsWith("NPCArena")).ToList())
+            {
+                var t = Traverse.Create(arena);
+                if (!arena.HasMap || t.Field("isCombatEnded").GetValue<bool>() || t.Field("tickFightStarted").GetValue<int>() == 0)
+                    continue;
+                t.Field("tickFightStarted").SetValue(System.Math.Max(1, Find.TickManager.TicksGame - 120001));
+                count++;
+            }
+            Messages.Message($"{count} arena fight(s) will time out within a second of game time if no colonist is on the map.", MessageTypeDefOf.NeutralEvent, false);
+        }
+
         [DebugAction(Category, "Arena status (who blocks the end check)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ArenaStatus()
         {

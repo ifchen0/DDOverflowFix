@@ -17,6 +17,14 @@ In the original basic AI branch, both sides are ordered to defend the map center
 [/list]
 Shelling AI and Factional War AI branches are unchanged. If anything fails, it falls back to the original behavior.
 
+[h2]3) Semi-simulation battles are fought out[/h2]
+With "simulated conquest" and "semi-simulation" both enabled in Dynamic Diplomacy, a battle site only gets a map when a player caravan enters it. If nobody enters within 2 days, the original mod picks the winner by auto-calc. With this patch:
+[list]
+[*]The arena map is generated at that point and the two armies fight it out, as in full simulation (you get the battle letter and can watch).
+[*]If that fight has not ended 2 days later and none of your pawns are on the map, auto-calc decides it (the original semi-simulation has no timeout once a fight starts).
+[/list]
+This follows Dynamic Diplomacy's own settings; there is no separate toggle. Note that every unvisited battle site now generates a map after 2 days.
+
 [h2]Notes[/h2]
 [list]
 [*]Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.
@@ -25,7 +33,7 @@ Shelling AI and Factional War AI branches are unchanged. If anything fails, it f
 [/list]
 
 [h2]Dev tools[/h2]
-With Development mode on, [b]Debug actions > "Dynamic Diplomacy Fix"[/b] can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / random) for quick testing.
+With Development mode on, [b]Debug actions > "Dynamic Diplomacy Fix"[/b] can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / random) for quick testing, and "Semi-sim: time out battle sites now / arena fights now" skip the 2-day waits.
 
 [hr][/hr]
 This mod was developed with the help of AI coding tools (Claude Code). Full source code is included in the Source folder and on [url=https://github.com/ifchen0/DDOverflowFix]GitHub[/url] for review.

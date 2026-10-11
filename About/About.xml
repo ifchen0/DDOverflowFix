@@ -21,12 +21,15 @@ In the original basic AI branch, both sides are ordered to defend the map center
 - Defender holds a position near its own entry, at least 14 cells away from the map edge (same position finder the siege/shelling AI uses).
 Shelling AI and Factional War AI branches are unchanged. If anything fails, it falls back to the original behavior.
 
+3) Semi-simulation battles are fought out
+With "simulated conquest" and "semi-simulation" both enabled in Dynamic Diplomacy, a battle site nobody enters within 2 days is no longer decided by auto-calc: the arena map is generated and the armies fight it out, as in full simulation. If that fight has not ended 2 days later and none of your pawns are on the map, auto-calc decides it. Follows Dynamic Diplomacy's own settings; no separate toggle.
+
 Notes:
 - Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.
 - Load after Harmony and Dynamic Diplomacy - Continued.
 - If the original mod fixes the overflow, a warning appears in the log.
 
-Dev tools: with Development mode on, Debug actions > "Dynamic Diplomacy Fix" can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / random) for quick testing.
+Dev tools: with Development mode on, Debug actions > "Dynamic Diplomacy Fix" can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / random) for quick testing, and "Semi-sim: time out battle sites now / arena fights now" skip the 2-day waits.
 
 This mod was developed with the help of AI coding tools (Claude Code). Full source code is included in the Source folder for review.</description>
   <modDependencies>
