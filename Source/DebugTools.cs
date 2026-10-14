@@ -31,6 +31,8 @@ namespace DDOverflowFix
         // action then leaves its mode here; the next InitArenaMap that actually runs applies it and jumps to the map.
         internal static bool PendingArena;
         internal static ForcedArenaAI PendingForced = ForcedArenaAI.None;
+        // With semi-simulation the conquest only creates a battle site; the mode waits for that site's InitArenaMap.
+        internal static MapParent PendingSite;
         private static bool applyingPending;
 
         private static readonly MethodInfo RandRange = AccessTools.Method(typeof(Rand), nameof(Rand.Range), new[] { typeof(int), typeof(int) });
@@ -41,10 +43,10 @@ namespace DDOverflowFix
         public static MethodBase TargetMethod() =>
             AccessTools.Method(AccessTools.TypeByName("DynamicDiplomacy.IncidentWorker_NPCConquest"), "InitArenaMap");
 
-        public static void Prefix()
+        public static void Prefix(object[] __args)
         {
             rollIndex = 0;
-            if (PendingArena && Forced == ForcedArenaAI.None)
+            if (PendingArena && Forced == ForcedArenaAI.None && (PendingSite == null || __args[0] == PendingSite))
             {
                 Forced = PendingForced;
                 applyingPending = true;
@@ -62,6 +64,7 @@ namespace DDOverflowFix
                 return;
             PendingArena = false;
             PendingForced = ForcedArenaAI.None;
+            PendingSite = null;
             Map map = (__args[0] as MapParent)?.Map;
             if (map != null)
                 CameraJumper.TryJump(map.Center, map);
@@ -222,6 +225,7 @@ namespace DDOverflowFix
             }
 
             var before = new HashSet<Map>(Find.Maps);
+            var sitesBefore = new HashSet<MapParent>(ArenaSites());
             int deferredBefore = DeferredCount();
             Patch_InitArenaMap_ForcedRoll.Forced = mode;
             bool ok;
@@ -245,6 +249,17 @@ namespace DDOverflowFix
                     Messages.Message("Shelling AI requires both factions to be Industrial or higher; otherwise it falls back to factional war AI.", MessageTypeDefOf.NeutralEvent, false);
                 return;
             }
+            MapParent site = ok && created == null ? ArenaSites().FirstOrDefault(p => !sitesBefore.Contains(p) && !p.HasMap) : null;
+            if (site != null)
+            {
+                Patch_InitArenaMap_ForcedRoll.PendingArena = true;
+                Patch_InitArenaMap_ForcedRoll.PendingForced = mode;
+                Patch_InitArenaMap_ForcedRoll.PendingSite = site;
+                Messages.Message("Semi-simulation battle site created; its arena uses this AI when the fight starts (use 'Semi-sim: time out battle sites now' to start it).", MessageTypeDefOf.NeutralEvent, false);
+                if (mode == ForcedArenaAI.Shelling)
+                    Messages.Message("Shelling AI requires both factions to be Industrial or higher; otherwise it falls back to factional war AI.", MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
             if (!ok || created == null)
             {
                 Messages.Message("Conquest did not create an arena this time (no valid target, or target already has a map). Try again.", MessageTypeDefOf.RejectInput, false);
@@ -255,6 +270,9 @@ namespace DDOverflowFix
                 Messages.Message("Shelling AI requires both factions to be Industrial or higher; otherwise it falls back to factional war AI.", MessageTypeDefOf.NeutralEvent, false);
             CameraJumper.TryJump(created.Center, created);
         }
+
+        private static IEnumerable<MapParent> ArenaSites() =>
+            Find.WorldObjects.MapParents.Where(p => p.def.defName.StartsWith("NPCArena"));
 
         /// <summary>Number of groups queued by Deferred Raid Generation, or 0 when that mod is not loaded.</summary>
         private static int DeferredCount()
