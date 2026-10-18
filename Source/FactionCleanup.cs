@@ -27,6 +27,10 @@ namespace DDOverflowFix
         private static readonly Assembly VanillaAssembly = typeof(Faction).Assembly;
         private static readonly Dictionary<Type, List<FieldInfo>> factionFieldCache = new Dictionary<Type, List<FieldInfo>>();
         private static readonly Dictionary<Type, List<FieldInfo>> allFieldCache = new Dictionary<Type, List<FieldInfo>>();
+        private static readonly FieldInfo EventsAffectingFaction = AccessTools.Field(typeof(HistoryEventsManager), "eventsAffectingFaction");
+        private static readonly AccessTools.FieldRef<IdeoManager, List<Ideo>> IdeoToRemove =
+            AccessTools.FieldRefAccess<IdeoManager, List<Ideo>>("toRemove");
+        private static List<FieldInfo> modStaticFactionFields;
 
         public static bool Prepare() => RemoveMethod != null && CanBeRemovedMethod != null;
 
@@ -73,7 +77,11 @@ namespace DDOverflowFix
                 }
                 string name = f.Name;
                 int id = f.loadID;
+                List<Pawn> modHeldPawns = ModHeldPawns();
+                List<Ideo> ideos = f.ideos?.AllIdeos.ToList() ?? new List<Ideo>();
                 ScrubModComponents(f);
+                ScrubModStatics(f);
+                (EventsAffectingFaction?.GetValue(Find.HistoryEventsManager) as IDictionary)?.Remove(f);
                 f.temporary = true;
                 RemoveMethod.Invoke(Find.FactionManager, new object[] { f });
                 if (Find.FactionManager.AllFactionsListForReading.Contains(f))
@@ -83,6 +91,13 @@ namespace DDOverflowFix
                     Log.Warning($"[DD Arena Fixes] Vanilla refused to remove {name} (Faction_{id}).");
                     continue;
                 }
+                // Vanilla only clears the faction of pawns it can find; mods may keep pawns inside their own world objects.
+                foreach (Pawn p in modHeldPawns)
+                {
+                    if (p.Faction == f)
+                        p.SetFaction(null);
+                }
+                KeepUsedIdeos(ideos, modHeldPawns);
                 removed.Add(f);
                 Log.Message($"[DD Arena Fixes] Removed defeated duplicate faction {name} ({f.def.defName}, Faction_{id}).");
             }
@@ -169,6 +184,94 @@ namespace DDOverflowFix
                         foreach (object v in items)
                             ClearFactionFields(v, f);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Clears static faction collections kept by mods (for example a raid cooldown mod's Dictionary&lt;Faction, ...&gt;
+        /// that its game component saves).
+        /// </summary>
+        private static void ScrubModStatics(Faction f)
+        {
+            if (modStaticFactionFields == null)
+            {
+                modStaticFactionFields = new List<FieldInfo>();
+                foreach (ModContentPack mod in LoadedModManager.RunningModsListForReading)
+                {
+                    foreach (Assembly asm in mod.assemblies.loadedAssemblies)
+                    {
+                        Type[] types;
+                        try { types = asm.GetTypes(); }
+                        catch (ReflectionTypeLoadException e) { types = e.Types.Where(t => t != null).ToArray(); }
+                        foreach (Type t in types)
+                        {
+                            if (t.ContainsGenericParameters)
+                                continue;
+                            foreach (FieldInfo fi in t.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+                            {
+                                if (!fi.IsLiteral && MentionsFaction(fi.FieldType))
+                                    modStaticFactionFields.Add(fi);
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (FieldInfo field in modStaticFactionFields)
+            {
+                object value;
+                try { value = field.GetValue(null); }
+                catch { continue; }
+                if (value == f && !field.IsInitOnly)
+                    field.SetValue(null, null);
+                else if (value is List<Faction> list)
+                    list.RemoveAll(x => x == f);
+                else if (value is HashSet<Faction> set)
+                    set.Remove(f);
+                else if (value is IDictionary dict && dict.Contains(f))
+                    dict.Remove(f);
+            }
+        }
+
+        private static bool MentionsFaction(Type t) =>
+            t == typeof(Faction) || (t.IsGenericType && t.GetGenericArguments().Contains(typeof(Faction)));
+
+        /// <summary>Pawns stored inside mod world objects (for example World Domination outpost occupants and prisoners).</summary>
+        private static List<Pawn> ModHeldPawns()
+        {
+            var pawns = new List<Pawn>();
+            foreach (WorldObject wo in Find.WorldObjects.AllWorldObjects)
+            {
+                if (IsVanilla(wo.GetType()))
+                    continue;
+                foreach (FieldInfo field in AllFields(wo.GetType()))
+                {
+                    object value = field.GetValue(wo);
+                    if (value is Pawn p)
+                        pawns.Add(p);
+                    else if (value is IEnumerable items && !(value is string))
+                        foreach (object item in items)
+                            if (item is Pawn ip)
+                                pawns.Add(ip);
+                }
+            }
+            return pawns;
+        }
+
+        /// <summary>
+        /// Vanilla queues the faction's ideos for removal when no map pawn follows them, even if world pawns or
+        /// mod-held pawns still do; keep those so the pawns do not lose their ideoligion on the next load.
+        /// </summary>
+        private static void KeepUsedIdeos(List<Ideo> ideos, List<Pawn> modHeldPawns)
+        {
+            List<Ideo> queue = IdeoToRemove?.Invoke(Find.IdeoManager);
+            if (queue == null || ideos.Count == 0)
+                return;
+            foreach (Ideo ideo in ideos)
+            {
+                if (!queue.Contains(ideo))
+                    continue;
+                if (PawnsFinder.AllMapsWorldAndTemporary_AliveOrDead.Concat(modHeldPawns).Any(p => p.ideo?.Ideo == ideo))
+                    queue.Remove(ideo);
             }
         }
 
