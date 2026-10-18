@@ -116,6 +116,13 @@ namespace DDOverflowFix
         [DebugAction(Category, "Conquest arena: shelling AI", allowedGameStates = AllowedGameStates.Playing)]
         private static void ConquestShelling() => RunConquest(ForcedArenaAI.Shelling);
 
+        [DebugAction(Category, "Player diplomacy event now", allowedGameStates = AllowedGameStates.Playing)]
+        private static void PlayerDiplomacyNow()
+        {
+            bool ok = PlayerDiplomacy.TryRun(out string result);
+            Messages.Message(result, ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput, false);
+        }
+
         [DebugAction(Category, "Jump to latest arena", allowedGameStates = AllowedGameStates.Playing)]
         private static void JumpToLatestArena()
         {

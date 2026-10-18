@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <DDAF_PlayerDiplomacy>Diplomacy changes can involve your faction</DDAF_PlayerDiplomacy>
+  <DDAF_PlayerDiplomacyDesc>Every 6 hours, with the chance below, a random NPC faction makes peace with you (if hostile) or turns hostile. Goodwill moves just far enough to change the relation (peace: 0, war: -75). Follows the diplomacy change, permanent enemy, exclude Empire and ideo bloc settings above. Added by Dynamic Diplomacy Arena Fixes.</DDAF_PlayerDiplomacyDesc>
+  <DDAF_PlayerDiplomacyChance>Chance per 6 hours: {0}%</DDAF_PlayerDiplomacyChance>
+</LanguageData>

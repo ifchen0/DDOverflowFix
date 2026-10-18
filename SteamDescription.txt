@@ -28,6 +28,9 @@ This follows Dynamic Diplomacy's own settings; there is no separate toggle. Note
 [h2]4) Defeated rebel factions are cleaned up[/h2]
 Rebellions create new factions, but defeated ones are never removed and pile up in the save. Once a day, a defeated faction that has an older faction of the same kind is removed through vanilla's own faction removal, as soon as nothing (pawns, quests, caravans, battles) still uses it. The oldest faction of each kind is always kept.
 
+[h2]5) Optional: diplomacy changes can involve your faction[/h2]
+Dynamic Diplomacy's diplomacy changes only ever pair two NPC factions. A new option in Dynamic Diplomacy's own settings (off by default, below the ideo bloc checkbox) lets a random NPC faction make peace with you or turn hostile every 6 hours, with a chance you set. Goodwill only moves as far as needed to change the relation (peace: 0, war: -75), and the diplomacy settings above it still apply.
+
 [h2]Notes[/h2]
 [list]
 [*]Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.
@@ -36,7 +39,7 @@ Rebellions create new factions, but defeated ones are never removed and pile up 
 [/list]
 
 [h2]Dev tools[/h2]
-With Development mode on, [b]Debug actions > "Dynamic Diplomacy Fix"[/b] can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / random) for quick testing, "Semi-sim: time out battle sites now / arena fights now" skip the 2-day waits, and "Remove defeated duplicate factions now" runs the daily cleanup at once.
+With Development mode on, [b]Debug actions > "Dynamic Diplomacy Fix"[/b] can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / random) for quick testing, "Semi-sim: time out battle sites now / arena fights now" skip the 2-day waits, "Remove defeated duplicate factions now" runs the daily cleanup at once, and "Player diplomacy event now" triggers one player diplomacy change.
 
 [hr][/hr]
 This mod was developed with the help of AI coding tools (Claude Code). Full source code is included in the Source folder and on [url=https://github.com/ifchen0/DDOverflowFix]GitHub[/url] for review.
