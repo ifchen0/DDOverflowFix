@@ -31,6 +31,9 @@ Rebellions create new factions, but defeated ones are never removed and pile up 
 [h2]5) Optional: diplomacy changes can involve your faction[/h2]
 Dynamic Diplomacy's diplomacy changes only ever pair two NPC factions. A new option in Dynamic Diplomacy's own settings (off by default, below the ideo bloc checkbox) lets a random NPC faction make peace with you or turn hostile every 6 hours, with a chance you set. Goodwill only moves as far as needed to change the relation (peace: 0, war: -75), and the diplomacy settings above it still apply.
 
+[h2]6) Conquered settlements are destroyed properly[/h2]
+When Dynamic Diplomacy conquers, razes or splits off a settlement, it only takes the old one off the map, so other mods never learn it is gone. With this patch the old settlement is destroyed the normal way, and mods clean up after it as they do for their own defeats (for example World Domination's turrets and advanced buildings, which used to stay behind). Structures left behind earlier are not removed.
+
 [h2]Notes[/h2]
 [list]
 [*]Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.
