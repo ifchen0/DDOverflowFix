@@ -3,4 +3,5 @@
   <DDAF_PlayerDiplomacy>外交變動可包含玩家陣營</DDAF_PlayerDiplomacy>
   <DDAF_PlayerDiplomacyDesc>每 6 小時依下方機率，隨機一個 NPC 陣營與你講和（原本敵對時）或轉為敵對。好感度只調整到剛好改變關係（和平：0，戰爭：-75）。沿用上方的外交變動、永久敵對、排除帝國與意識形態集團設定。此選項由 Dynamic Diplomacy Arena Fixes 加入。</DDAF_PlayerDiplomacyDesc>
   <DDAF_PlayerDiplomacyChance>每 6 小時機率：{0}%</DDAF_PlayerDiplomacyChance>
+  <DDAF_ArenaAttacking>{0} 攻擊 {1}</DDAF_ArenaAttacking>
 </LanguageData>
