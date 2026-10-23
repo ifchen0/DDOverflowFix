@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <DDAF_PlayerDiplomacy>外交變動可包含玩家陣營</DDAF_PlayerDiplomacy>
-  <DDAF_PlayerDiplomacyDesc>每 6 小時依下方機率，隨機一個 NPC 陣營與你講和（原本敵對時）或轉為敵對。好感度只調整到剛好改變關係（和平：0，戰爭：-75）。沿用上方的外交變動、永久敵對、排除帝國與意識形態集團設定。此選項由 Dynamic Diplomacy Arena Fixes 加入。</DDAF_PlayerDiplomacyDesc>
-  <DDAF_PlayerDiplomacyChance>每 6 小時機率：{0}%</DDAF_PlayerDiplomacyChance>
-  <DDAF_ArenaAttacking>{0} 攻擊 {1}</DDAF_ArenaAttacking>
+  <DDAF_PlayerDiplomacyDesc>每年約依下方次數，隨機一個NPC陣營與你講和（原本敵對時）或轉為敵對。好感度只調整到剛好改變關係（和平：0，戰爭：-75）。沿用上方的外交變動、永久敵對、排除帝國與意識形態集團設定。此選項由Dynamic Diplomacy Arena Fixes加入。</DDAF_PlayerDiplomacyDesc>
+  <DDAF_PlayerDiplomacyPerYear>每年次數：{0}</DDAF_PlayerDiplomacyPerYear>
+  <DDAF_BasePerYear>基本每年次數：{0}</DDAF_BasePerYear>
+  <DDAF_BasePerYearDesc>Dynamic Diplomacy另外把這個事件加進所有說書人，不受額外機率影響（原本外交變動每年2-4次、征服每年3-5次）。設為0即關閉。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_BasePerYearDesc>
+  <DDAF_ExtraPerYear>額外每年次數：{0}</DDAF_ExtraPerYear>
+  <DDAF_ExtraPerYearDesc>每6小時擲一次。取代原本以整數百分比設定的機率（每6小時1% = 每年2.4次），因此可以設得更低。找不到合適目標時事件不會發生。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_ExtraPerYearDesc>
+  <DDAF_TotalPerYear>合計：每年約{0}次</DDAF_TotalPerYear>
+  <DDAF_ArenaAttacking>{0}攻擊{1}</DDAF_ArenaAttacking>
 </LanguageData>

@@ -12,6 +12,7 @@ namespace DDOverflowFix
         {
             new Harmony("ifchen0.ddoverflowfix").PatchAll();
             PlayerDiplomacySettings.Reload();
+            Frequency.ApplyBase();
         }
     }
 

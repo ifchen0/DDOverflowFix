@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <DDAF_PlayerDiplomacy>Diplomacy changes can involve your faction</DDAF_PlayerDiplomacy>
-  <DDAF_PlayerDiplomacyDesc>Every 6 hours, with the chance below, a random NPC faction makes peace with you (if hostile) or turns hostile. Goodwill moves just far enough to change the relation (peace: 0, war: -75). Follows the diplomacy change, permanent enemy, exclude Empire and ideo bloc settings above. Added by Dynamic Diplomacy Arena Fixes.</DDAF_PlayerDiplomacyDesc>
-  <DDAF_PlayerDiplomacyChance>Chance per 6 hours: {0}%</DDAF_PlayerDiplomacyChance>
+  <DDAF_PlayerDiplomacyDesc>About the number of times per year set below, a random NPC faction makes peace with you (if hostile) or turns hostile. Goodwill moves just far enough to change the relation (peace: 0, war: -75). Follows the diplomacy change, permanent enemy, exclude Empire and ideo bloc settings above. Added by Dynamic Diplomacy Arena Fixes.</DDAF_PlayerDiplomacyDesc>
+  <DDAF_PlayerDiplomacyPerYear>Times per year: {0}</DDAF_PlayerDiplomacyPerYear>
+  <DDAF_BasePerYear>Base times per year: {0}</DDAF_BasePerYear>
+  <DDAF_BasePerYearDesc>Dynamic Diplomacy also adds this event to every storyteller, independent of the extra chance (originally 2-4 diplomacy changes and 3-5 conquests per year). 0 turns that off. Set by Dynamic Diplomacy Arena Fixes.</DDAF_BasePerYearDesc>
+  <DDAF_ExtraPerYear>Extra times per year: {0}</DDAF_ExtraPerYear>
+  <DDAF_ExtraPerYearDesc>Rolled every 6 hours. Replaces the old whole-percent chance (1% per 6 hours = 2.4 times per year), so lower values are possible. An event that finds no valid target does nothing. Set by Dynamic Diplomacy Arena Fixes.</DDAF_ExtraPerYearDesc>
+  <DDAF_TotalPerYear>Total: about {0} times per year</DDAF_TotalPerYear>
   <DDAF_ArenaAttacking>{0} attacking {1}</DDAF_ArenaAttacking>
 </LanguageData>

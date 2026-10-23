@@ -75,7 +75,7 @@ namespace DDOverflowFix
             try
             {
                 if (!attacker.HostileTo(defender))
-                    attacker.RelationWith(defender).kind = FactionRelationKind.Hostile;
+                    Relations.Set(attacker, defender, FactionRelationKind.Hostile);
                 object lhs = Arena.GenerateGroup.Invoke(null, new object[] { attacker, Arena.Points });
                 object rhs = Arena.GenerateGroup.Invoke(null, new object[] { defender, Arena.Points });
                 Log.Message($"[DD Overflow Fix] Nobody joined the battle for {combatLoc.Name}; starting the arena fight.");

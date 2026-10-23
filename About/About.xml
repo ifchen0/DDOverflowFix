@@ -28,10 +28,18 @@ With "simulated conquest" and "semi-simulation" both enabled in Dynamic Diplomac
 Rebellions create new factions, but defeated ones are never removed and pile up in the save. Once a day, a defeated faction that has an older faction of the same kind is removed through vanilla's own faction removal, as soon as nothing (pawns, quests, caravans, battles) still uses it. The oldest faction of each kind is always kept.
 
 5) Optional: diplomacy changes can involve your faction
-Dynamic Diplomacy's diplomacy changes only ever pair two NPC factions. A new option in Dynamic Diplomacy's own settings (off by default) lets a random NPC faction make peace with you or turn hostile every 6 hours, with a chance you set. Goodwill only moves as far as needed to change the relation (peace: 0, war: -75).
+Dynamic Diplomacy's diplomacy changes only ever pair two NPC factions. A new option in Dynamic Diplomacy's own settings (off by default) lets a random NPC faction make peace with you or turn hostile about as many times per year as you set. Goodwill only moves as far as needed to change the relation (peace: 0, war: -75).
 
 6) Conquered settlements are destroyed properly
 When Dynamic Diplomacy conquers, razes or splits off a settlement, it only takes the old one off the map, so other mods never learn it is gone. With this patch the old settlement is destroyed the normal way, and mods clean up after it as they do for their own defeats (for example World Domination's turrets and advanced buildings, which used to stay behind). Structures left behind earlier are not removed.
+
+7) Event frequency in times per year
+Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a year) to every storyteller, on top of its "extra chance" sliders, and those sliders only go down to 1% per 6 hours (2.4 a year). Its settings now show, for each event, a base count (the storyteller part, 0 turns it off), an extra count per year that can go below 1, and the total.
+
+8) Alliance and relation fixes
+- With simulated conquest on, the "great alliance" step never ran. It now runs when a conquest battle starts, honouring "exclude Empire" and permanent enemies.
+- Rebellions and battle sites set factions hostile without changing goodwill, so the war could end silently. Goodwill now follows the relation.
+- If a battle site's settlement was destroyed or changed owner meanwhile, the attacker's win no longer replaces or razes it.
 
 Notes:
 - Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.

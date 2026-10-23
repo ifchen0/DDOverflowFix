@@ -30,17 +30,24 @@ namespace DDOverflowFix
     [HarmonyPatch(typeof(NPCDiploModSettings), nameof(NPCDiploModSettings.ExposeData))]
     public static class Patch_NPCDiploModSettings_ExposeData
     {
-        public static void Postfix()
+        public static void Postfix(NPCDiploModSettings __instance)
         {
             Scribe_Values.Look(ref PlayerDiplomacy.Enabled, "ddafPlayerDiplomacy", false);
-            Scribe_Values.Look(ref PlayerDiplomacy.Chance, "ddafPlayerDiplomacyChance", 1);
+            // Older versions stored a whole percent per 6 hours; kept only to take it over once.
+            int chance = 1;
+            Scribe_Values.Look(ref chance, "ddafPlayerDiplomacyChance", 1);
+            Scribe_Values.Look(ref PlayerDiplomacy.PerYear, "ddafPlayerDiplomacyPerYear", -1f);
+            if (Scribe.mode == LoadSaveMode.LoadingVars && PlayerDiplomacy.PerYear < 0f)
+                PlayerDiplomacy.PerYear = Frequency.PercentToPerYear(chance);
+            Frequency.ExposeData(__instance);
         }
     }
 
     [HarmonyPatch(typeof(NPCDiploSettings), nameof(NPCDiploSettings.DoSettingsWindowContents))]
     public static class Patch_NPCDiploSettings_PlayerDiplomacyOption
     {
-        private const float ExtraHeight = 100f;
+        // Player diplomacy rows plus the per-year frequency rows (Frequency.cs).
+        private const float ExtraHeight = 320f;
 
         private static readonly FieldInfo IdeoBloc = AccessTools.Field(typeof(NPCDiploModSettings), nameof(NPCDiploModSettings.repAllowIdeoBloc));
         private static readonly MethodInfo Drawer = AccessTools.Method(typeof(Patch_NPCDiploSettings_PlayerDiplomacyOption), nameof(CheckboxThenOption));
@@ -81,8 +88,8 @@ namespace DDOverflowFix
             if (PlayerDiplomacy.Enabled)
             {
                 listing.Gap(4f);
-                listing.Label("DDAF_PlayerDiplomacyChance".Translate(PlayerDiplomacy.Chance));
-                PlayerDiplomacy.Chance = Mathf.RoundToInt(listing.Slider(PlayerDiplomacy.Chance, 1f, 100f));
+                PlayerDiplomacy.PerYear = Frequency.Slider(listing, "DDAF_PlayerDiplomacyPerYear".Translate(Frequency.Format(PlayerDiplomacy.PerYear)),
+                    PlayerDiplomacy.PerYear, null);
             }
         }
     }

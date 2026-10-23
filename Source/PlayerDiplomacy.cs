@@ -8,9 +8,9 @@ using Verse;
 namespace DDOverflowFix
 {
     /// <summary>
-    /// Optional: Dynamic Diplomacy's diplomacy changes only ever pair two NPC factions. Every 6 hours, with the configured
-    /// chance, one eligible NPC faction makes peace with the player (if hostile) or turns hostile. Candidates follow Dynamic
-    /// Diplomacy's own diplomacy settings. Goodwill moves just far enough to cross vanilla's threshold (peace: 0, war: -75)
+    /// Optional: Dynamic Diplomacy's diplomacy changes only ever pair two NPC factions. Rolled every 6 hours for the
+    /// configured times per year, one eligible NPC faction makes peace with the player (if hostile) or turns hostile.
+    /// Candidates follow Dynamic Diplomacy's own diplomacy settings. Goodwill moves just far enough to cross vanilla's threshold (peace: 0, war: -75)
     /// through vanilla's goodwill path, so relation kind and side effects stay consistent; the ideo surrender branch is skipped.
     /// </summary>
     [HarmonyPatch(typeof(FactionManager), nameof(FactionManager.FactionManagerTick))]
@@ -21,13 +21,13 @@ namespace DDOverflowFix
 
         // Stored in Dynamic Diplomacy's own settings file (see PlayerDiplomacySettings).
         public static bool Enabled;
-        public static int Chance = 1;
+        public static float PerYear = Frequency.PercentToPerYear(1);
 
         public static void Postfix()
         {
             if (!Enabled || Find.TickManager.TicksGame % CheckInterval != CheckOffset)
                 return;
-            if (Rand.Range(0, 100) >= Chance)
+            if (!Rand.Chance(Frequency.ChancePerCheck(PerYear)))
                 return;
             try
             {
@@ -94,16 +94,34 @@ namespace DDOverflowFix
         /// </summary>
         private static int GoodwillChange(Faction f, Faction player)
         {
+            // Base goodwill, not GoodwillWith: the latter is capped by goodwill situations, but the change applies to the base.
+            int current = player.BaseGoodwillWith(f);
             if (f.HostileTo(player))
-                return Math.Max(-player.GoodwillWith(f), 0);
-            return Math.Min(player.GoodwillToMakeHostile(f), 0);
+                return Math.Max(-current, 0);
+            return Math.Min(-75 - current, 0);
+        }
+
+        /// <summary>
+        /// Vanilla scales a change moving away from natural goodwill by up to 25% (e.g. 76 -> -94 instead of -75).
+        /// Returns the smallest raw change whose adjusted value still reaches the wanted change, so goodwill stops at the threshold.
+        /// </summary>
+        private static int RawGoodwillChange(Faction f, Faction player, int wanted)
+        {
+            int sign = Math.Sign(wanted);
+            for (int raw = 0; raw != wanted; raw += sign)
+            {
+                if (Math.Abs(player.CalculateAdjustedGoodwillChange(f, raw)) >= Math.Abs(wanted))
+                    return raw;
+            }
+            return wanted;
         }
 
         private static bool Apply(Faction f, Faction player, out string result)
         {
             bool wasHostile = f.HostileTo(player);
             int before = player.GoodwillWith(f);
-            player.TryAffectGoodwillWith(f, GoodwillChange(f, player), canSendMessage: false, canSendHostilityLetter: false);
+            player.TryAffectGoodwillWith(f, RawGoodwillChange(f, player, GoodwillChange(f, player)),
+                canSendMessage: false, canSendHostilityLetter: false);
             // A zero or clamped change does not re-check the thresholds; force the check once.
             if (f.HostileTo(player) == wasHostile)
                 player.Notify_GoodwillSituationsChanged(f, false, null, null);
