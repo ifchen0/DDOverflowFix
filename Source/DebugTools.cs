@@ -15,7 +15,8 @@ namespace DDOverflowFix
         None,
         Shelling,
         Basic,
-        FactionalWar
+        FactionalWar,
+        BaseSiege
     }
 
     /// <summary>
@@ -81,12 +82,12 @@ namespace DDOverflowFix
         }
 
         /// <summary>
-        /// Roll 0 picks shelling (&lt;=25), roll 1 picks basic (&lt;=50) or factional war.
+        /// Roll 0 picks shelling (&lt;=25), roll 1 picks basic (&lt;=50) or factional war. A base siege always uses basic.
         /// </summary>
         public static int Roll(int min, int max)
         {
             int index = rollIndex++;
-            switch (Forced)
+            switch (BaseSiege.ActiveGarrison != null ? ForcedArenaAI.Basic : Forced)
             {
                 case ForcedArenaAI.Shelling:
                     return index == 0 ? min : max;
@@ -115,6 +116,9 @@ namespace DDOverflowFix
 
         [DebugAction(Category, "Conquest arena: shelling AI", allowedGameStates = AllowedGameStates.Playing)]
         private static void ConquestShelling() => RunConquest(ForcedArenaAI.Shelling);
+
+        [DebugAction(Category, "Conquest arena: settlement map", allowedGameStates = AllowedGameStates.Playing)]
+        private static void ConquestBaseSiege() => RunConquest(ForcedArenaAI.BaseSiege);
 
         [DebugAction(Category, "Player diplomacy event now", allowedGameStates = AllowedGameStates.Playing)]
         private static void PlayerDiplomacyNow()

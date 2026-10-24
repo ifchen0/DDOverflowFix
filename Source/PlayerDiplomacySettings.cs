@@ -40,14 +40,15 @@ namespace DDOverflowFix
             if (Scribe.mode == LoadSaveMode.LoadingVars && PlayerDiplomacy.PerYear < 0f)
                 PlayerDiplomacy.PerYear = Frequency.PercentToPerYear(chance);
             Frequency.ExposeData(__instance);
+            Scribe_Values.Look(ref BaseSiege.Chance, "ddafBaseSiegeChance", BaseSiege.DefaultChance);
         }
     }
 
     [HarmonyPatch(typeof(NPCDiploSettings), nameof(NPCDiploSettings.DoSettingsWindowContents))]
     public static class Patch_NPCDiploSettings_PlayerDiplomacyOption
     {
-        // Player diplomacy rows plus the per-year frequency rows (Frequency.cs).
-        private const float ExtraHeight = 320f;
+        // Player diplomacy rows, the per-year frequency rows (Frequency.cs) and the settlement map chance (BaseSiege.cs).
+        private const float ExtraHeight = 380f;
 
         private static readonly FieldInfo IdeoBloc = AccessTools.Field(typeof(NPCDiploModSettings), nameof(NPCDiploModSettings.repAllowIdeoBloc));
         private static readonly MethodInfo Drawer = AccessTools.Method(typeof(Patch_NPCDiploSettings_PlayerDiplomacyOption), nameof(CheckboxThenOption));

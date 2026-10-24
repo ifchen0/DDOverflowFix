@@ -10,4 +10,6 @@
   <DDAF_TotalPerYear>Total: about {0} times per year</DDAF_TotalPerYear>
   <DDAF_ArenaAttacking>{0} attacking {1}</DDAF_ArenaAttacking>
   <DDAF_ConquestBattleStart>{0} forces are about to engage defensive forces in {1} settlement of {2}. The fighting will start soon.</DDAF_ConquestBattleStart>
+  <DDAF_BaseSiegeChance>Battle on the settlement map: {0}</DDAF_BaseSiegeChance>
+  <DDAF_BaseSiegeChanceDesc>Chance that a conquest battle is fought on a map generated like the contested settlement: the defender holds its base with the garrison that map comes with (Custom Base Framework bases and Better Settlement Defense roles apply when installed), and the attacker uses the basic arena AI. 0 turns it off. Added by Dynamic Diplomacy Arena Fixes.</DDAF_BaseSiegeChanceDesc>
 </LanguageData>

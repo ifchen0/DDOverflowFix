@@ -93,6 +93,7 @@ namespace DDOverflowFix
             Widgets.Label(hint, $"({lo} - {hi})");
             GUI.color = Color.white;
             Text.Anchor = anchor;
+            BaseSiege.DrawSetting(listing);
             return value;
         }
     }

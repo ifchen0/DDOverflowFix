@@ -10,4 +10,6 @@
   <DDAF_TotalPerYear>合計：每年約{0}次</DDAF_TotalPerYear>
   <DDAF_ArenaAttacking>{0} 攻擊 {1}</DDAF_ArenaAttacking>
   <DDAF_ConquestBattleStart>{0} 的軍隊正在進攻 {1} 的 {2}，戰鬥很快就會開始</DDAF_ConquestBattleStart>
+  <DDAF_BaseSiegeChance>在據點地圖開戰的機率：{0}</DDAF_BaseSiegeChance>
+  <DDAF_BaseSiegeChanceDesc>征服戰役改在依爭奪據點生成的地圖上進行：守方以地圖自帶的守軍據守基地（有安裝Custom Base Framework時使用它的基地，Better Settlement Defense的守軍戰術也會生效），攻方使用基本AI。設為0即關閉。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_BaseSiegeChanceDesc>
 </LanguageData>

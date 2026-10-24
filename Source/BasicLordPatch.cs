@@ -37,7 +37,8 @@ namespace DDOverflowFix
     }
 
     /// <summary>
-    /// Replaces the basic arena AI (both sides defend map center) with attacker assault / defender holding near its own entry.
+    /// Replaces the basic arena AI (both sides defend map center) with attacker assault / defender holding near its own entry
+    /// (or, in a base siege, keeping the garrison's own lords).
     /// </summary>
     [HarmonyPatch]
     public static class Patch_MakeBasicLordForPawns
@@ -53,6 +54,15 @@ namespace DDOverflowFix
             Faction defender = Patch_InitArenaMap_Context.Defender;
             if (attacker == null || defender == null || map == null || pawns == null)
                 return true;
+
+            // Base siege: the garrison keeps the lords its settlement generator gave it.
+            if (faction == defender && BaseSiege.ActiveGarrison != null)
+            {
+                __result = pawns.Select(p => p.GetLord()).FirstOrDefault(l => l != null);
+                result = __result != null;
+                if (result)
+                    return false;
+            }
 
             try
             {

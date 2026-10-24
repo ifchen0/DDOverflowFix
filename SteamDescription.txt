@@ -44,6 +44,16 @@ Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a 
 [*]If a battle site's settlement was destroyed or changed owner while the battle waited, the attacker's win no longer replaces or razes it.
 [/list]
 
+[h2]9) Optional: battles on the settlement map[/h2]
+A fourth arena style next to basic, factional war and shelling. The battle map is generated the way the contested settlement's own map would be, so the defender holds a real base with the garrison that map comes with, and the attacker comes in from the map edge with the basic AI above.
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3813689040]Custom Base Framework[/url] bases are used when it handles that faction, and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3771713589]Better Settlement Defense[/url] roles apply to the garrison. Neither is required.
+[*]The fight is decided by the garrison: civilians, turrets and later reinforcements do not count.
+[*]Chance per battle is set under the threat points in Dynamic Diplomacy's settings (default 25%, 0 turns it off).
+[*]Defenders win most of these fights. Attacker strength is left as is on purpose.
+[*]Generating a base map takes a few seconds, longer than the open field.
+[/list]
+
 [h2]Notes[/h2]
 [list]
 [*]Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.
@@ -52,7 +62,7 @@ Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a 
 [/list]
 
 [h2]Dev tools[/h2]
-With Development mode on, [b]Debug actions > "Dynamic Diplomacy Fix"[/b] can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / random) for quick testing, "Semi-sim: time out battle sites now / arena fights now" skip the 2-day waits, "Remove defeated duplicate factions now" runs the daily cleanup at once, and "Player diplomacy event now" triggers one player diplomacy change.
+With Development mode on, [b]Debug actions > "Dynamic Diplomacy Fix"[/b] can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / settlement map / random) for quick testing, "Semi-sim: time out battle sites now / arena fights now" skip the 2-day waits, "Remove defeated duplicate factions now" runs the daily cleanup at once, and "Player diplomacy event now" triggers one player diplomacy change.
 
 [hr][/hr]
 This mod was developed with the help of AI coding tools (Claude Code). Full source code is included in the Source folder and on [url=https://github.com/ifchen0/DDOverflowFix]GitHub[/url] for review.
