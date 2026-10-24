@@ -52,6 +52,8 @@ namespace DDOverflowFix
     {
         // Arenas whose InitArenaMap has been called; with Deferred Raid Generation the map appears some seconds later.
         private static readonly HashSet<int> Started = new HashSet<int>();
+        // Loading a save creates a new Game; IDs from the previous one must not block the same sites in the loaded save.
+        private static Game startedGame;
 
         public static bool Prepare() => Arena.Available;
 
@@ -67,6 +69,11 @@ namespace DDOverflowFix
 
             // DD's Tick sets isCombatEnded before calling OnTimeOut; the battle goes on.
             Arena.IsCombatEnded(__instance) = false;
+            if (startedGame != Current.Game)
+            {
+                Started.Clear();
+                startedGame = Current.Game;
+            }
             if (!Started.Add(__instance.ID))
                 return false;
 
