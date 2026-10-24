@@ -9,4 +9,5 @@
   <DDAF_ExtraPerYearDesc>Rolled every 6 hours. Replaces the old whole-percent chance (1% per 6 hours = 2.4 times per year), so lower values are possible. An event that finds no valid target does nothing. Set by Dynamic Diplomacy Arena Fixes.</DDAF_ExtraPerYearDesc>
   <DDAF_TotalPerYear>Total: about {0} times per year</DDAF_TotalPerYear>
   <DDAF_ArenaAttacking>{0} attacking {1}</DDAF_ArenaAttacking>
+  <DDAF_ConquestBattleStart>{0} forces are about to engage defensive forces in {1} settlement of {2}. The fighting will start soon.</DDAF_ConquestBattleStart>
 </LanguageData>

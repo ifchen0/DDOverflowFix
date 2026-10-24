@@ -8,5 +8,6 @@
   <DDAF_ExtraPerYear>額外每年次數：{0}</DDAF_ExtraPerYear>
   <DDAF_ExtraPerYearDesc>每6小時擲一次。取代原本以整數百分比設定的機率（每6小時1% = 每年2.4次），因此可以設得更低。找不到合適目標時事件不會發生。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_ExtraPerYearDesc>
   <DDAF_TotalPerYear>合計：每年約{0}次</DDAF_TotalPerYear>
-  <DDAF_ArenaAttacking>{0}攻擊{1}</DDAF_ArenaAttacking>
+  <DDAF_ArenaAttacking>{0} 攻擊 {1}</DDAF_ArenaAttacking>
+  <DDAF_ConquestBattleStart>{0} 的軍隊正在進攻 {1} 的 {2}，戰鬥很快就會開始</DDAF_ConquestBattleStart>
 </LanguageData>
