@@ -42,6 +42,7 @@ Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a 
 [*]With simulated conquest on, the "great alliance" step never ran (and its cooldown never counted down). It now runs when a conquest battle starts, and it honours "exclude Empire" and permanent enemies, which the original ignored.
 [*]Rebellions and battle sites set factions hostile without changing goodwill, so the next goodwill update could end the war silently. Goodwill now follows the relation.
 [*]If a battle site's settlement was destroyed or changed owner while the battle waited, the attacker's win no longer replaces or razes it.
+[*]Battle sites were marked as belonging to your faction. They now have no faction (existing sites too).
 [/list]
 
 [h2]9) Optional: battles on the settlement map[/h2]

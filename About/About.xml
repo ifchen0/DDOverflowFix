@@ -40,6 +40,7 @@ Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a 
 - With simulated conquest on, the "great alliance" step never ran. It now runs when a conquest battle starts, honouring "exclude Empire" and permanent enemies.
 - Rebellions and battle sites set factions hostile without changing goodwill, so the war could end silently. Goodwill now follows the relation.
 - If a battle site's settlement was destroyed or changed owner meanwhile, the attacker's win no longer replaces or razes it.
+- Battle sites were marked as belonging to your faction. They now have no faction.
 
 9) Optional: battles on the settlement map
 A fourth arena style next to basic, factional war and shelling. The battle map is generated the way the contested settlement's own map would be, so the defender holds a real base with the garrison that map comes with, and the attacker comes in from the map edge with the basic AI above.

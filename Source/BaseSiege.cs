@@ -68,7 +68,7 @@ namespace DDOverflowFix
         {
             Generating = arena;
             GeneratingDef = def;
-            // Settlement generators take the base owner from the map parent's faction; the arena belongs to the player.
+            // Settlement generators take the base owner from the map parent's faction; the arena has none.
             savedFaction = arena.Faction;
             FactionField(arena) = Arena.DefenderFaction(arena);
         }
