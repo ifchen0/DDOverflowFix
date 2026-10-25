@@ -28,6 +28,8 @@ namespace DDOverflowFix
             string vanillaLine = attacker.Name + " VS " + defender.Name;
             if (__result.EndsWith(vanillaLine))
                 __result = __result.Substring(0, __result.Length - vanillaLine.Length) + "DDAF_ArenaAttacking".Translate(attacker.Name, defender.Name);
+            // Battle sites have no faction (ArenaNoFaction), so the base string DD appends its line to can be empty.
+            __result = __result.TrimStart('\n');
         }
     }
 }
