@@ -61,6 +61,7 @@ A fourth arena style next to basic, factional war and shelling. The battle map i
 [*]Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.
 [*]Load after Harmony and Dynamic Diplomacy - Continued.
 [*]If the original mod fixes the overflow, a warning appears in the log.
+[*]"Reached max signals per frame (3000)" when an NPC army sets up a siege camp is logged as a warning, so it no longer opens the log window in dev mode. The dropped signals only notify old quests the faction once took part in.
 [/list]
 
 [h2]Dev tools[/h2]
