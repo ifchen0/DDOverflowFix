@@ -1,74 +1,51 @@
 Unofficial fix for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3220299022]Dynamic Diplomacy - Continued[/url].
 
 [h2]1) OverflowException in NPC conquest battles[/h2]
-Fixes this error:
 [code]System.OverflowException: Value was either too large or too small for an Int32.
   at DynamicDiplomacy.IncidentWorker_NPCConquest.InitArenaMap[/code]
+In long-running saves about 37.5% of conquest battles threw this before any AI was assigned, so both armies wandered off and auto-calc decided the battle. The raid seed is now kept in range.
 
-[b]Cause:[/b] InitArenaMap builds a raid seed with [i]int.Parse(tickCreated.ToString() + map.uniqueID)[/i]. In long-running saves the concatenated number exceeds Int32.MaxValue, so roughly 37.5% of NPC conquest battles throw before any AI is assigned. Both armies then spawn without orders and wander off the map, and the battle is resolved by auto-calc after timeout (in semi-simulation mode, the arena retries and keeps spawning more pawns).
-
-[b]Fix:[/b] A Harmony transpiler replaces that single int.Parse call. Values that fit in Int32 are unchanged; larger values are folded deterministically into range.
-
-[h2]2) Better "basic AI" for arena battles[/h2]
-In the original basic AI branch, both sides are ordered to defend the map center, which turns every fight into a melee brawl and cripples ranged / high-tech factions. With this patch:
-[list]
-[*]Attacker hunts down and engages the nearest defenders (using Dynamic Diplomacy's own raid AI).
-[*]Defender holds a position near its own entry, at least 14 cells away from the map edge (same position finder the siege/shelling AI uses).
-[/list]
-Shelling AI and Factional War AI branches are unchanged. If anything fails, it falls back to the original behavior.
+[h2]2) Better basic arena AI[/h2]
+The original basic AI sends both sides to the map center. Now the attacker hunts down the nearest defenders and the defender holds a position near its own entry. The other AI branches are unchanged.
 
 [h2]3) Semi-simulation battles are fought out[/h2]
-With "simulated conquest" and "semi-simulation" both enabled in Dynamic Diplomacy, a battle site only gets a map when a player caravan enters it. If nobody enters within 2 days, the original mod picks the winner by auto-calc. With this patch:
-[list]
-[*]The arena map is generated at that point and the two armies fight it out, as in full simulation (you get the battle letter and can watch).
-[*]If that fight has not ended 2 days later and none of your pawns are on the map, auto-calc decides it (the original semi-simulation has no timeout once a fight starts).
-[*]Caravans can be sent to "Enter" a site before it has a map; it is generated on arrival and they go straight in.
-[/list]
-This follows Dynamic Diplomacy's own settings; there is no separate toggle. Note that every unvisited battle site now generates a map after 2 days.
+With simulated conquest and semi-simulation on, a battle site nobody entered within 2 days was decided by auto-calc. Now its map is generated and the armies fight it out (you get the battle letter); if it has not ended 2 days later and none of your pawns are there, auto-calc decides it. Caravans can also be sent to "Enter" a site before it has a map: it is generated on arrival and they go straight in.
 
 [h2]4) Defeated rebel factions are cleaned up[/h2]
-Rebellions create new factions, but defeated ones are never removed and pile up in the save. Once a day, a defeated faction that has an older faction of the same kind is removed through vanilla's own faction removal, as soon as nothing (pawns, quests, caravans, battles, other mods' data) still uses it. The oldest faction of each kind is always kept.
+Rebellions add factions that are never removed once defeated. Once a day, a defeated faction with an older faction of the same kind is removed through vanilla's faction removal, once nothing (pawns, quests, caravans, battles, other mods' data) still uses it. The oldest of each kind is always kept.
 
-[h2]5) Optional: diplomacy changes can involve your faction[/h2]
-Dynamic Diplomacy's diplomacy changes only ever pair two NPC factions. A new option in Dynamic Diplomacy's own settings (off by default, below the ideo bloc checkbox) lets a random NPC faction make peace with you or turn hostile about as many times per year as you set. Goodwill only moves as far as needed to change the relation (peace: 0, war: -75), and the diplomacy settings above it still apply.
+[h2]5) Optional: diplomacy changes with your faction[/h2]
+A new option in Dynamic Diplomacy's settings (off by default) lets a random NPC faction make peace with you or turn hostile a set number of times per year. Goodwill only moves as far as needed (peace 0, war -75).
 
 [h2]6) Conquered settlements are destroyed properly[/h2]
-When Dynamic Diplomacy conquers, razes or splits off a settlement, it only takes the old one off the map, so other mods never learn it is gone. With this patch the old settlement is destroyed the normal way, and mods clean up after it as they do for their own defeats (for example World Domination's turrets and advanced buildings, which used to stay behind). Structures left behind earlier are not removed.
+Conquered, razed or split-off settlements are now destroyed the normal way, so other mods clean up after them (for example World Domination's turrets and buildings).
 
 [h2]7) Event frequency in times per year[/h2]
-Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a year) to every storyteller, on top of its "extra chance" sliders, and those sliders only go down to 1% per 6 hours (2.4 a year). Its settings now show, for each event, a base count (the storyteller part, 0 turns it off), an extra count per year that can go below 1, and the total.
+The settings show, for each event, the storyteller base count (0 turns it off), an extra count per year that can go below the old minimum of 1% per 6 hours, and the total.
 
 [h2]8) Alliance and relation fixes[/h2]
 [list]
-[*]With simulated conquest on, the "great alliance" step never ran (and its cooldown never counted down). It now runs when a conquest battle starts (only with distance calculation on, as in the original) and honours "exclude Empire" and permanent enemies, which the original ignored.
-[*]Rebellions and battle sites set factions hostile without changing goodwill, so the next goodwill update could end the war silently. Goodwill now follows the relation.
-[*]If a battle site's settlement was destroyed or changed owner while the battle waited, the attacker's win no longer replaces or razes it. Such a semi-simulation site is now dropped at its timeout and cannot be entered.
-[*]Battle sites were marked as belonging to your faction. They now have no faction (existing sites too).
-[*]Pollution on a battle site map (wastepacks burst in the fight or left behind when the map closes) was blamed on you and cost goodwill with nearby factions. It no longer does.
-[*]Both armies could flee from the same battle: after one side broke, the other kept counting its own losses and fled too. Once one side has fled, the other now holds the field.
+[*]With simulated conquest the "great alliance" step never ran. It now runs when a battle starts (with distance calculation on, as in the original) and honours "exclude Empire" and permanent enemies.
+[*]Goodwill now follows the relation when rebellions and battle sites declare war, so the next goodwill update no longer ends the war silently.
+[*]If the settlement was destroyed or changed owner while its battle site waited, the attacker's win changes nothing, and a semi-simulation site is dropped at its timeout.
+[*]Battle sites no longer belong to your faction.
+[*]Pollution on a battle site map no longer costs you goodwill.
+[*]Once one army flees a battle, the other holds the field instead of fleeing too.
 [/list]
 
 [h2]9) Optional: battles on the settlement map[/h2]
-A fourth arena style next to basic, factional war and shelling. The battle map is generated the way the contested settlement's own map would be, so the defender holds a real base with the garrison that map comes with, and the attacker comes in from the map edge with the basic AI above.
-[list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3813689040]Custom Base Framework[/url] bases are used when it handles that faction, and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3771713589]Better Settlement Defense[/url] roles apply to the garrison. Neither is required.
-[*]The fight is decided by the garrison: civilians, turrets and later reinforcements do not count.
-[*]Chance per battle is set under the threat points in Dynamic Diplomacy's settings (default 25%, 0 turns it off).
-[*]Defenders win most of these fights. Attacker strength is left as is on purpose.
-[*]Generating a base map takes a few seconds, longer than the open field.
-[/list]
+A fourth arena style: the map is generated like the contested settlement's own, and the defender holds that base with its garrison while the attacker uses the basic AI. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3813689040]Custom Base Framework[/url] bases and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3771713589]Better Settlement Defense[/url] roles apply when installed. Only the garrison counts for the result. Chance per battle is set under the threat points (default 25%, 0 turns it off). Defenders win most of these fights, and the map takes a few seconds to generate.
 
 [h2]Notes[/h2]
 [list]
-[*]A fresh install (no Dynamic Diplomacy settings saved yet) starts with simulated conquest, semi-simulation, distance calculation, alliance, expansion and clone faction on; ideology change, permanent enemies and raze clearing ruins off; exclude Empire on; extra diplomacy/conquest/expansion events 1% per 6 h. Saved settings are unchanged.
-[*]Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress and no caravan is heading to enter one.
+[*]A fresh install (no Dynamic Diplomacy settings saved yet) starts with simulated conquest, semi-simulation, distance calculation, alliance, expansion and clone faction on; ideology change, permanent enemies and raze clearing ruins off; exclude Empire on; extra diplomacy, conquest and expansion events at 1% per 6 hours. Saved settings are unchanged.
+[*]Safe to add to an existing save. Remove it only when no arena battle is in progress and no caravan is heading to enter one.
 [*]Load after Harmony and Dynamic Diplomacy - Continued.
-[*]If the original mod fixes the overflow, a warning appears in the log.
-[*]"Reached max signals per frame (3000)" when an NPC army sets up a siege camp is logged as a warning, so it no longer opens the log window in dev mode. The dropped signals only notify old quests the faction once took part in.
+[*]"Reached max signals per frame (3000)" during NPC siege camps is logged as a warning instead of an error.
 [/list]
 
 [h2]Dev tools[/h2]
-With Development mode on, [b]Debug actions > "Dynamic Diplomacy Fix"[/b] can trigger a conquest arena with a forced AI branch (basic / factional war / shelling / settlement map / random) for quick testing, "Semi-sim: time out battle sites now / arena fights now" skip the 2-day waits, "Remove defeated duplicate factions now" runs the daily cleanup at once, and "Player diplomacy event now" triggers one player diplomacy change.
+Development mode adds [b]Debug actions > "Dynamic Diplomacy Fix"[/b]: start a conquest arena with a chosen AI, skip the 2-day waits, run the faction cleanup now, or trigger a player diplomacy change.
 
 [hr][/hr]
 This mod was developed with the help of AI coding tools (Claude Code). Full source code is included in the Source folder and on [url=https://github.com/ifchen0/DDOverflowFix]GitHub[/url] for review.
