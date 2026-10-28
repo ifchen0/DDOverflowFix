@@ -23,6 +23,11 @@ namespace DDOverflowFix
             NPCDiploSettings dd = NPCDiploSettings.Instance;
             if (dd == null)
                 return;
+            if (DefaultSettings.IsFreshInstall(dd))
+            {
+                DefaultSettings.Apply(dd.settings);
+                return;
+            }
             LoadedModManager.ReadModSettings<NPCDiploModSettings>(dd.Content.FolderName, dd.GetType().Name);
         }
     }

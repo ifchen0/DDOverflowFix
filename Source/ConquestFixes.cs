@@ -98,7 +98,8 @@ namespace DDOverflowFix
 
     /// <summary>
     /// With simulated conquest on, Dynamic Diplomacy returns as soon as the battle is set up, before its alliance check and
-    /// the alliance cooldown countdown, so the alliance option never does anything. Runs that step for the battle's attacker.
+    /// the alliance cooldown countdown, so the alliance option never does anything. Runs that step for the battle's attacker, as the non-simulated
+    /// conquest would (with distance calculation off that is only the cooldown countdown).
     /// Its candidate list also ignored "exclude Empire" and "permanent enemies" (a missing else); both are honoured here.
     /// </summary>
     [HarmonyPatch]
@@ -129,7 +130,8 @@ namespace DDOverflowFix
         private static void AllianceStep(Faction attacker)
         {
             NPCDiploModSettings dd = NPCDiploSettings.Instance.settings;
-            if (dd.repAllowAlliance && DiplomacyWorldComponent.allianceCooldown <= 0)
+            // Without distance calculation Dynamic Diplomacy's own conquest only counts the cooldown down.
+            if (dd.repAllowDistanceCalc && dd.repAllowAlliance && DiplomacyWorldComponent.allianceCooldown <= 0)
                 TryFormAlliance(attacker, dd);
             if (DiplomacyWorldComponent.allianceCooldown > 0)
                 DiplomacyWorldComponent.allianceCooldown--;

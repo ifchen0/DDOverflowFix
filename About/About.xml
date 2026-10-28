@@ -37,7 +37,7 @@ When Dynamic Diplomacy conquers, razes or splits off a settlement, it only takes
 Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a year) to every storyteller, on top of its "extra chance" sliders, and those sliders only go down to 1% per 6 hours (2.4 a year). Its settings now show, for each event, a base count (the storyteller part, 0 turns it off), an extra count per year that can go below 1, and the total.
 
 8) Alliance and relation fixes
-- With simulated conquest on, the "great alliance" step never ran. It now runs when a conquest battle starts, honouring "exclude Empire" and permanent enemies.
+- With simulated conquest on, the "great alliance" step never ran. It now runs when a conquest battle starts (with distance calculation on, as in the original), honouring "exclude Empire" and permanent enemies.
 - Rebellions and battle sites set factions hostile without changing goodwill, so the war could end silently. Goodwill now follows the relation.
 - If a battle site's settlement was destroyed or changed owner meanwhile, the attacker's win no longer replaces or razes it.
 - Battle sites were marked as belonging to your faction. They now have no faction.
@@ -53,6 +53,7 @@ A fourth arena style next to basic, factional war and shelling. The battle map i
 - Generating a base map takes a few seconds, longer than the open field.
 
 Notes:
+- A fresh install (no Dynamic Diplomacy settings saved yet) starts with simulated conquest, semi-simulation, distance calculation, alliance, expansion and clone faction on, ideology change and permanent enemies off, exclude Empire on, raze clearing ruins off and extra diplomacy, conquest and expansion events at 1% per 6 hours. Saved settings are not changed.
 - Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress and no caravan is on its way to enter a battle site.
 - Load after Harmony and Dynamic Diplomacy - Continued.
 - If the original mod fixes the overflow, a warning appears in the log.
