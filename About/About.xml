@@ -25,7 +25,7 @@ Shelling AI and Factional War AI branches are unchanged. If anything fails, it f
 With "simulated conquest" and "semi-simulation" both enabled in Dynamic Diplomacy, a battle site nobody enters within 2 days is no longer decided by auto-calc: the arena map is generated and the armies fight it out, as in full simulation. If that fight has not ended 2 days later and none of your pawns are on the map, auto-calc decides it. A caravan can be sent with "Enter" before the site has a map: the map is generated on arrival and the caravan enters right away. Follows Dynamic Diplomacy's own settings; no separate toggle.
 
 4) Defeated rebel factions are cleaned up
-Rebellions create new factions, but defeated ones are never removed and pile up in the save. Once a day, a defeated faction that has an older faction of the same kind is removed through vanilla's own faction removal, as soon as nothing (pawns, quests, caravans, battles, other mods' records) still uses it. Other mods' lists of factions simply drop it afterwards. The oldest faction of each kind is always kept.
+Rebellions create new factions, but defeated ones are never removed and pile up in the save. Once a day, a defeated faction that has an older faction of the same kind is removed through vanilla's own faction removal, as soon as nothing (pawns, quests, caravans, battles, other mods' data) still uses it. The oldest faction of each kind is always kept.
 
 5) Optional: diplomacy changes can involve your faction
 Dynamic Diplomacy's diplomacy changes only ever pair two NPC factions. A new option in Dynamic Diplomacy's own settings (off by default) lets a random NPC faction make peace with you or turn hostile about as many times per year as you set. Goodwill only moves as far as needed to change the relation (peace: 0, war: -75).
@@ -54,7 +54,7 @@ A fourth arena style next to basic, factional war and shelling. The battle map i
 
 Notes:
 - A fresh install (no Dynamic Diplomacy settings saved yet) starts with simulated conquest, semi-simulation, distance calculation, alliance, expansion and clone faction on, ideology change and permanent enemies off, exclude Empire on, raze clearing ruins off and extra diplomacy, conquest and expansion events at 1% per 6 hours. Saved settings are not changed.
-- Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress and no caravan is on its way to enter a battle site.
+- Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress and no caravan is heading to enter one.
 - Load after Harmony and Dynamic Diplomacy - Continued.
 - If the original mod fixes the overflow, a warning appears in the log.
 - "Reached max signals per frame (3000)" when an NPC army sets up a siege camp is logged as a warning, so it no longer opens the log window in dev mode. The dropped signals only notify old quests the faction once took part in.
