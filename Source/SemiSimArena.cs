@@ -57,6 +57,9 @@ namespace DDOverflowFix
 
         public static bool Prepare() => Arena.Available;
 
+        /// <summary>True while this site's arena is generated or waiting in Deferred Raid Generation's queue.</summary>
+        public static bool Queued(MapParent arena) => startedGame == Current.Game && Started.Contains(arena.ID);
+
         public static MethodBase TargetMethod() => Arena.OnTimeOut;
 
         public static bool Prefix(MapParent __instance)

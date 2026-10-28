@@ -22,7 +22,7 @@ In the original basic AI branch, both sides are ordered to defend the map center
 Shelling AI and Factional War AI branches are unchanged. If anything fails, it falls back to the original behavior.
 
 3) Semi-simulation battles are fought out
-With "simulated conquest" and "semi-simulation" both enabled in Dynamic Diplomacy, a battle site nobody enters within 2 days is no longer decided by auto-calc: the arena map is generated and the armies fight it out, as in full simulation. If that fight has not ended 2 days later and none of your pawns are on the map, auto-calc decides it. Follows Dynamic Diplomacy's own settings; no separate toggle.
+With "simulated conquest" and "semi-simulation" both enabled in Dynamic Diplomacy, a battle site nobody enters within 2 days is no longer decided by auto-calc: the arena map is generated and the armies fight it out, as in full simulation. If that fight has not ended 2 days later and none of your pawns are on the map, auto-calc decides it. A caravan can be sent with "Enter" before the site has a map: the map is generated on arrival and the caravan enters right away. Follows Dynamic Diplomacy's own settings; no separate toggle.
 
 4) Defeated rebel factions are cleaned up
 Rebellions create new factions, but defeated ones are never removed and pile up in the save. Once a day, a defeated faction that has an older faction of the same kind is removed through vanilla's own faction removal, as soon as nothing (pawns, quests, caravans, battles) still uses it. The oldest faction of each kind is always kept.
@@ -53,7 +53,7 @@ A fourth arena style next to basic, factional war and shelling. The battle map i
 - Generating a base map takes a few seconds, longer than the open field.
 
 Notes:
-- Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress.
+- Safe to add to an existing save. To remove it, do so when no NPC arena battle is in progress and no caravan is on its way to enter a battle site.
 - Load after Harmony and Dynamic Diplomacy - Continued.
 - If the original mod fixes the overflow, a warning appears in the log.
 - "Reached max signals per frame (3000)" when an NPC army sets up a siege camp is logged as a warning, so it no longer opens the log window in dev mode. The dropped signals only notify old quests the faction once took part in.
