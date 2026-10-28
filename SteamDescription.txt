@@ -44,6 +44,7 @@ Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a 
 [*]If a battle site's settlement was destroyed or changed owner while the battle waited, the attacker's win no longer replaces or razes it.
 [*]Battle sites were marked as belonging to your faction. They now have no faction (existing sites too).
 [*]Pollution on a battle site map (wastepacks burst in the fight or left behind when the map closes) was blamed on you and cost goodwill with nearby factions. It no longer does.
+[*]Both armies could flee from the same battle: after one side broke, the other kept counting its own losses and fled too. Once one side has fled, the other now holds the field.
 [/list]
 
 [h2]9) Optional: battles on the settlement map[/h2]

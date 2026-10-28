@@ -42,6 +42,7 @@ Dynamic Diplomacy also adds diplomacy changes (2-4 a year) and conquests (3-5 a 
 - If a battle site's settlement was destroyed or changed owner meanwhile, the attacker's win no longer replaces or razes it.
 - Battle sites were marked as belonging to your faction. They now have no faction.
 - Pollution on a battle site map (burst or leftover wastepacks) no longer costs goodwill with nearby factions.
+- Once one side of a battle has fled, the other no longer flees too and holds the field.
 
 9) Optional: battles on the settlement map
 A fourth arena style next to basic, factional war and shelling. The battle map is generated the way the contested settlement's own map would be, so the defender holds a real base with the garrison that map comes with, and the attacker comes in from the map edge with the basic AI above.
