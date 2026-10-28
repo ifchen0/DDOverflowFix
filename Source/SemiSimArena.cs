@@ -41,6 +41,13 @@ namespace DDOverflowFix
         public static bool SemiSimActive => (bool)AllowSimulatedConquest.GetValue(null) && (bool)UsingSemiSimulation.GetValue(null);
 
         public static float Points => (float)ThreatPoints.GetValue(null);
+
+        /// <summary>The settlement the battle is for still exists and is still held by the defender.</summary>
+        public static bool StillContested(MapParent arena)
+        {
+            Settlement combatLoc = CombatLoc(arena);
+            return combatLoc != null && !combatLoc.Destroyed && Find.WorldObjects.Contains(combatLoc) && combatLoc.Faction == DefenderFaction(arena);
+        }
     }
 
     /// <summary>
@@ -67,8 +74,15 @@ namespace DDOverflowFix
             if (!Arena.SemiSimActive || __instance.HasMap || Arena.TickFightStarted(__instance) != 0)
                 return true;
             Settlement combatLoc = Arena.CombatLoc(__instance);
-            if (combatLoc == null || combatLoc.Destroyed)
+            if (combatLoc == null)
                 return true;
+            if (!Arena.StillContested(__instance))
+            {
+                // Lost or taken by someone else while the site waited: no fight and no result (isCombatEnded is
+                // already set, so DD removes the site).
+                Log.Message($"[DD Overflow Fix] {combatLoc.Name} is gone or no longer held by the defender; the battle site is dropped.");
+                return false;
+            }
 
             // DD's Tick sets isCombatEnded before calling OnTimeOut; the battle goes on.
             Arena.IsCombatEnded(__instance) = false;

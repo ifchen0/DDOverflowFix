@@ -15,6 +15,7 @@ namespace DDOverflowFix
     /// Dynamic Diplomacy rebellions create new factions but only ever mark beaten ones as defeated, so they pile up in the save.
     /// Once a day, removes defeated factions that have an older faction of the same def (Dynamic Diplomacy's own notion of a
     /// clone) through vanilla's temporary-faction removal. The oldest faction of each def is always kept.
+    /// A faction another mod still uses waits for a later day; mod data is only changed after vanilla removed it.
     /// </summary>
     [HarmonyPatch(typeof(FactionManager), nameof(FactionManager.FactionManagerTick))]
     public static class FactionCleanup
@@ -25,7 +26,6 @@ namespace DDOverflowFix
         private static readonly MethodInfo RemoveMethod = AccessTools.Method(typeof(FactionManager), "Remove", new[] { typeof(Faction) });
         private static readonly MethodInfo CanBeRemovedMethod = AccessTools.Method(typeof(FactionManager), "FactionCanBeRemoved", new[] { typeof(Faction) });
         private static readonly Assembly VanillaAssembly = typeof(Faction).Assembly;
-        private static readonly Dictionary<Type, List<FieldInfo>> factionFieldCache = new Dictionary<Type, List<FieldInfo>>();
         private static readonly Dictionary<Type, List<FieldInfo>> allFieldCache = new Dictionary<Type, List<FieldInfo>>();
         private static readonly FieldInfo EventsAffectingFaction = AccessTools.Field(typeof(HistoryEventsManager), "eventsAffectingFaction");
         private static readonly AccessTools.FieldRef<IdeoManager, List<Ideo>> IdeoToRemove =
@@ -75,15 +75,35 @@ namespace DDOverflowFix
                     blocked.Add((f, reason));
                     continue;
                 }
+                // Read only up to here: mod data is changed only once vanilla has actually removed the faction.
+                var refs = new ModReferences(f);
+                refs.Scan();
+                if (refs.Blockers.Count > 0)
+                {
+                    blocked.Add((f, "mod data still uses it: " + string.Join(", ", refs.Blockers.Take(3))));
+                    continue;
+                }
                 string name = f.Name;
                 int id = f.loadID;
                 List<Pawn> modHeldPawns = ModHeldPawns();
                 List<Ideo> ideos = f.ideos?.AllIdeos.ToList() ?? new List<Ideo>();
-                ScrubModComponents(f);
-                ScrubModStatics(f);
-                (EventsAffectingFaction?.GetValue(Find.HistoryEventsManager) as IDictionary)?.Remove(f);
                 f.temporary = true;
-                RemoveMethod.Invoke(Find.FactionManager, new object[] { f });
+                try
+                {
+                    RemoveMethod.Invoke(Find.FactionManager, new object[] { f });
+                }
+                catch (Exception e)
+                {
+                    if (Find.FactionManager.AllFactionsListForReading.Contains(f))
+                    {
+                        f.temporary = false;
+                        blocked.Add((f, "vanilla Remove failed"));
+                        Log.Warning($"[DD Arena Fixes] Vanilla could not remove {name} (Faction_{id}); nothing else was changed: {e.InnerException ?? e}");
+                        continue;
+                    }
+                    // Removed, but something hooked to the removal threw; the leftovers below still need clearing.
+                    Log.Warning($"[DD Arena Fixes] Error while removing {name} (Faction_{id}): {e.InnerException ?? e}");
+                }
                 if (Find.FactionManager.AllFactionsListForReading.Contains(f))
                 {
                     f.temporary = false;
@@ -91,6 +111,8 @@ namespace DDOverflowFix
                     Log.Warning($"[DD Arena Fixes] Vanilla refused to remove {name} (Faction_{id}).");
                     continue;
                 }
+                refs.ApplyRemovals();
+                (EventsAffectingFaction?.GetValue(Find.HistoryEventsManager) as IDictionary)?.Remove(f);
                 // Vanilla only clears the faction of pawns it can find; mods may keep pawns inside their own world objects.
                 foreach (Pawn p in modHeldPawns)
                 {
@@ -129,111 +151,212 @@ namespace DDOverflowFix
             {
                 if (map.lordManager.lords.Any(l => l.faction == f))
                     return "lord on map " + map;
-                foreach (MapComponent comp in map.components)
-                {
-                    if (!IsVanilla(comp.GetType()) && References(comp, f))
-                        return "map component " + comp.GetType().Name;
-                }
-            }
-            foreach (WorldObject wo in Find.WorldObjects.AllWorldObjects)
-            {
-                if (!IsVanilla(wo.GetType()) && References(wo, f))
-                    return "world object " + wo.Label;
-            }
-            foreach (Quest q in Find.QuestManager.QuestsListForReading)
-            {
-                if (q.State != QuestState.Ongoing && q.State != QuestState.NotYetAccepted)
-                    continue;
-                foreach (QuestPart part in q.PartsListForReading)
-                {
-                    if (!IsVanilla(part.GetType()) && References(part, f))
-                        return "quest " + q.name;
-                }
             }
             return null;
         }
 
         /// <summary>
-        /// Clears references to the faction that mod world/game components keep (World Domination's leader, underdog and
-        /// coalition state, fortification owners, logs), so they do not point at a removed faction.
+        /// Finds where mod data refers to a faction, without changing anything. Membership entries (a Faction in a list or
+        /// set, a dictionary keyed by it, a known per-faction record in a list) can be dropped once the faction is gone;
+        /// any other reference, such as a Faction field in a mod's own object, means the mod still uses the faction, and
+        /// the removal waits (nulling it would leave that mod with a record it never expects).
         /// </summary>
-        private static void ScrubModComponents(Faction f)
+        private class ModReferences
         {
-            IEnumerable<object> comps = Find.World.components.Cast<object>().Concat(Current.Game.components.Cast<object>());
-            foreach (object comp in comps)
+            private const int MaxDepth = 6;
+            private const int MaxObjects = 200000;
+
+            // List items that only track a faction's activity and are dropped as a whole, by type and faction field.
+            private static readonly Dictionary<string, string> RemovableItems = new Dictionary<string, string>
             {
-                if (IsVanilla(comp.GetType()))
-                    continue;
-                foreach (FieldInfo field in AllFields(comp.GetType()))
+                // Vanilla Expanded Framework raid tracking; it drops these itself once their pawns are gone.
+                { "VEF.Storyteller.RaidGroup", "faction" },
+            };
+
+            public readonly List<string> Blockers = new List<string>();
+            private readonly List<Action> removals = new List<Action>();
+            private readonly Faction target;
+            private readonly HashSet<object> visited = new HashSet<object>(ReferenceComparer.Instance);
+
+            public ModReferences(Faction target)
+            {
+                this.target = target;
+            }
+
+            public void Scan()
+            {
+                foreach (GameComponent comp in Current.Game.components)
+                    Walk(comp, comp.GetType().Name, 0);
+                foreach (WorldComponent comp in Find.World.components)
+                    Walk(comp, comp.GetType().Name, 0);
+                foreach (Map map in Find.Maps)
                 {
-                    object value = field.GetValue(comp);
-                    if (value == f)
-                        field.SetValue(comp, null);
-                    else if (value is List<Faction> list)
-                        list.RemoveAll(x => x == f);
-                    else if (value is HashSet<Faction> set)
-                        set.Remove(f);
-                    else if (value is IDictionary dict)
-                    {
-                        if (dict.Contains(f))
-                            dict.Remove(f);
-                        foreach (object v in dict.Values)
-                            ClearFactionFields(v, f);
-                    }
-                    else if (value is IList items)
-                        foreach (object v in items)
-                            ClearFactionFields(v, f);
+                    foreach (MapComponent comp in map.components)
+                        Walk(comp, comp.GetType().Name, 0);
                 }
+                foreach (WorldObject wo in Find.WorldObjects.AllWorldObjects)
+                    Walk(wo, "world object " + wo.Label, 0);
+                foreach (Quest q in Find.QuestManager.QuestsListForReading)
+                {
+                    if (q.State != QuestState.Ongoing && q.State != QuestState.NotYetAccepted)
+                        continue;
+                    foreach (QuestPart part in q.PartsListForReading)
+                        Walk(part, "quest " + q.name, 0);
+                }
+                foreach (FieldInfo field in ModStaticFactionFields())
+                {
+                    object value;
+                    try { value = field.GetValue(null); }
+                    catch { continue; }
+                    Value(value, $"{field.DeclaringType.Name}.{field.Name}", 0);
+                }
+            }
+
+            public void ApplyRemovals()
+            {
+                foreach (Action removal in removals)
+                {
+                    try
+                    {
+                        removal();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Warning("[DD Arena Fixes] Could not drop a removed faction from mod data: " + e.Message);
+                    }
+                }
+            }
+
+            /// <summary>Fields of an object from a mod assembly; vanilla objects are left to vanilla's own removal.</summary>
+            private void Walk(object obj, string path, int depth)
+            {
+                if (obj == null || depth > MaxDepth || IsVanilla(obj.GetType()) || !IsModType(obj.GetType()) || !visited.Add(obj))
+                    return;
+                if (visited.Count > MaxObjects)
+                {
+                    if (!Blockers.Contains("mod data too large to check"))
+                        Blockers.Add("mod data too large to check");
+                    return;
+                }
+                foreach (FieldInfo field in AllFields(obj.GetType()))
+                {
+                    if (field.IsLiteral)
+                        continue;
+                    Value(field.GetValue(obj), path + "." + field.Name, depth);
+                }
+            }
+
+            private void Value(object value, string path, int depth)
+            {
+                switch (value)
+                {
+                    case null:
+                    case string _:
+                        return;
+                    case Faction faction:
+                        if (faction == target)
+                            Blockers.Add(path);
+                        return;
+                    case List<Faction> factions:
+                        if (factions.Contains(target))
+                            removals.Add(() => factions.RemoveAll(x => x == target));
+                        return;
+                    case HashSet<Faction> set:
+                        if (set.Contains(target))
+                            removals.Add(() => set.Remove(target));
+                        return;
+                    case IDictionary dict:
+                        foreach (DictionaryEntry entry in dict)
+                        {
+                            if (entry.Key == target)
+                            {
+                                removals.Add(() => dict.Remove(target));
+                                continue;
+                            }
+                            Value(entry.Key, path + "{key}", depth + 1);
+                            Value(entry.Value, $"{path}[{entry.Key}]", depth + 1);
+                        }
+                        return;
+                    case IList list:
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            object item = list[i];
+                            if (IsRemovableItem(item))
+                            {
+                                removals.Add(() => list.Remove(item));
+                                continue;
+                            }
+                            Value(item, $"{path}[{i}]", depth + 1);
+                        }
+                        return;
+                    case IEnumerable items:
+                        int n = 0;
+                        foreach (object item in items)
+                            Value(item, $"{path}[{n++}]", depth + 1);
+                        return;
+                    default:
+                        Walk(value, path, depth + 1);
+                        return;
+                }
+            }
+
+            private bool IsRemovableItem(object item)
+            {
+                if (item == null || !RemovableItems.TryGetValue(item.GetType().FullName, out string fieldName))
+                    return false;
+                FieldInfo field = AccessTools.Field(item.GetType(), fieldName);
+                return field != null && field.GetValue(item) == target;
             }
         }
 
-        /// <summary>
-        /// Clears static faction collections kept by mods (for example a raid cooldown mod's Dictionary&lt;Faction, ...&gt;
-        /// that its game component saves).
-        /// </summary>
-        private static void ScrubModStatics(Faction f)
+        private class ReferenceComparer : IEqualityComparer<object>
         {
-            if (modStaticFactionFields == null)
+            public static readonly ReferenceComparer Instance = new ReferenceComparer();
+
+            public new bool Equals(object x, object y) => ReferenceEquals(x, y);
+
+            public int GetHashCode(object obj) => System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
+        }
+
+        private static HashSet<Assembly> modAssemblies;
+
+        private static bool IsModType(Type t)
+        {
+            if (modAssemblies == null)
+                modAssemblies = new HashSet<Assembly>(LoadedModManager.RunningModsListForReading.SelectMany(m => m.assemblies.loadedAssemblies));
+            return !t.IsPrimitive && !t.IsEnum && modAssemblies.Contains(t.Assembly);
+        }
+
+        /// <summary>Static fields of mod types whose type mentions Faction (for example a raid cooldown mod's dictionary).</summary>
+        private static List<FieldInfo> ModStaticFactionFields()
+        {
+            if (modStaticFactionFields != null)
+                return modStaticFactionFields;
+            modStaticFactionFields = new List<FieldInfo>();
+            foreach (ModContentPack mod in LoadedModManager.RunningModsListForReading)
             {
-                modStaticFactionFields = new List<FieldInfo>();
-                foreach (ModContentPack mod in LoadedModManager.RunningModsListForReading)
+                foreach (Assembly asm in mod.assemblies.loadedAssemblies)
                 {
-                    foreach (Assembly asm in mod.assemblies.loadedAssemblies)
+                    Type[] types;
+                    try { types = asm.GetTypes(); }
+                    catch (ReflectionTypeLoadException e) { types = e.Types.Where(t => t != null).ToArray(); }
+                    foreach (Type t in types)
                     {
-                        Type[] types;
-                        try { types = asm.GetTypes(); }
-                        catch (ReflectionTypeLoadException e) { types = e.Types.Where(t => t != null).ToArray(); }
-                        foreach (Type t in types)
+                        if (t.ContainsGenericParameters)
+                            continue;
+                        foreach (FieldInfo fi in t.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
                         {
-                            if (t.ContainsGenericParameters)
-                                continue;
-                            foreach (FieldInfo fi in t.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
-                            {
-                                if (!fi.IsLiteral && MentionsFaction(fi.FieldType))
-                                    modStaticFactionFields.Add(fi);
-                            }
+                            if (!fi.IsLiteral && MentionsFaction(fi.FieldType))
+                                modStaticFactionFields.Add(fi);
                         }
                     }
                 }
             }
-            foreach (FieldInfo field in modStaticFactionFields)
-            {
-                object value;
-                try { value = field.GetValue(null); }
-                catch { continue; }
-                if (value == f && !field.IsInitOnly)
-                    field.SetValue(null, null);
-                else if (value is List<Faction> list)
-                    list.RemoveAll(x => x == f);
-                else if (value is HashSet<Faction> set)
-                    set.Remove(f);
-                else if (value is IDictionary dict && dict.Contains(f))
-                    dict.Remove(f);
-            }
+            return modStaticFactionFields;
         }
 
         private static bool MentionsFaction(Type t) =>
-            t == typeof(Faction) || (t.IsGenericType && t.GetGenericArguments().Contains(typeof(Faction)));
+            t == typeof(Faction) || (t.IsGenericType && t.GetGenericArguments().Any(MentionsFaction));
 
         /// <summary>Pawns stored inside mod world objects (for example World Domination outpost occupants and prisoners).</summary>
         private static List<Pawn> ModHeldPawns()
@@ -275,39 +398,7 @@ namespace DDOverflowFix
             }
         }
 
-        private static void ClearFactionFields(object obj, Faction f)
-        {
-            if (obj == null || obj.GetType().IsPrimitive || obj is string || IsVanilla(obj.GetType()))
-                return;
-            foreach (FieldInfo field in FactionFields(obj.GetType()))
-            {
-                if (field.GetValue(obj) == f)
-                    field.SetValue(obj, null);
-            }
-        }
-
-        private static bool References(object obj, Faction f)
-        {
-            foreach (FieldInfo field in FactionFields(obj.GetType()))
-            {
-                if (field.GetValue(obj) == f)
-                    return true;
-            }
-            return false;
-        }
-
         private static bool IsVanilla(Type t) => t.Assembly == VanillaAssembly;
-
-        /// <summary>Instance fields of type Faction declared by mod types in the hierarchy.</summary>
-        private static List<FieldInfo> FactionFields(Type type)
-        {
-            if (!factionFieldCache.TryGetValue(type, out List<FieldInfo> fields))
-            {
-                fields = AllFields(type).Where(fi => fi.FieldType == typeof(Faction)).ToList();
-                factionFieldCache[type] = fields;
-            }
-            return fields;
-        }
 
         private static List<FieldInfo> AllFields(Type type)
         {

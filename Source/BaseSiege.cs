@@ -47,13 +47,17 @@ namespace DDOverflowFix
             return forced == ForcedArenaAI.BaseSiege || Rand.ChanceSeeded(Chance, Gen.HashCombineInt(arena.ID, 0x0BA5E));
         }
 
-        /// <summary>A base siege map is an arena map holding buildings of the defender.</summary>
+        /// <summary>
+        /// A base siege map is an arena map generated with the borrowed settlement generator, which the map keeps (and
+        /// saves) as its generatorDef. Defender buildings are no sign: the shelling AI builds a siege camp on open field.
+        /// </summary>
         public static bool IsBaseSiegeMap(Map map)
         {
             if (map == null || !IsArena(map.Parent))
                 return false;
-            Faction defender = Arena.DefenderFaction(map.Parent);
-            return defender != null && map.listerBuildings.allBuildingsNonColonist.Any(b => b.Faction == defender);
+            if (Generating == map.Parent)
+                return true;
+            return map.generatorDef != null && map.generatorDef != map.Parent.MapGeneratorDef;
         }
 
         /// <summary>Defender pawns able to fight; Custom Base Framework civilians are left out.</summary>
@@ -100,8 +104,10 @@ namespace DDOverflowFix
 
         // Before Custom Base Framework's prefixes, which already look at the map parent.
         [HarmonyPriority(Priority.High)]
-        public static void Prefix(PlanetTile tile)
+        // __state: this call began the generation, so only this call ends it (not a nested GetOrGenerateMap).
+        public static void Prefix(PlanetTile tile, out bool __state)
         {
+            __state = false;
             if (BaseSiege.Generating != null || Current.Game.FindMap(tile) != null)
                 return;
             MapParent parent = Find.WorldObjects.MapParentAt(tile);
@@ -115,6 +121,7 @@ namespace DDOverflowFix
                 if (def == null || def == parent.MapGeneratorDef)
                     return;
                 BaseSiege.BeginGeneration(parent, def);
+                __state = true;
             }
             catch (Exception e)
             {
@@ -123,7 +130,11 @@ namespace DDOverflowFix
             }
         }
 
-        public static void Finalizer() => BaseSiege.EndGeneration();
+        public static void Finalizer(bool __state)
+        {
+            if (__state)
+                BaseSiege.EndGeneration();
+        }
     }
 
     [HarmonyPatch(typeof(MapParent), nameof(MapParent.MapGeneratorDef), MethodType.Getter)]

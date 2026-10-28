@@ -70,7 +70,7 @@ namespace DDOverflowFix
         /// <summary>A battle that DD would still start for a caravan on its tile (see MapParentNPCArena.Tick).</summary>
         public static bool CanGenerate(MapParent arena) =>
             Arena.SemiSimActive && !arena.HasMap && !Arena.IsCombatEnded(arena) && Arena.TickFightStarted(arena) == 0
-            && Arena.CombatLoc(arena) != null && !Patch_MapParentNPCArena_OnTimeOut.Queued(arena);
+            && Arena.StillContested(arena) && !Patch_MapParentNPCArena_OnTimeOut.Queued(arena);
 
         public static IEnumerable<FloatMenuOption> GetFloatMenuOptions(Caravan caravan, MapParent arena) =>
             CaravanArrivalActionUtility.GetFloatMenuOptions(() => CanGenerate(arena),

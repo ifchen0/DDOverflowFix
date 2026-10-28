@@ -198,7 +198,7 @@ namespace DDOverflowFix
         {
             Settlement combatLoc = Arena.CombatLoc(__instance);
             Faction defender = Arena.DefenderFaction(__instance);
-            if (combatLoc != null && !combatLoc.Destroyed && Find.WorldObjects.Contains(combatLoc) && combatLoc.Faction == defender)
+            if (Arena.StillContested(__instance))
                 return true;
             Log.Message($"[DD Arena Fixes] {combatLoc?.Name ?? "Battle site settlement"} is gone or no longer held by {defender?.Name}; the attacker's win changes nothing.");
             return false;
