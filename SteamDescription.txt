@@ -29,6 +29,7 @@ The settings show, for each event, the storyteller base count (0 turns it off), 
 [*]Goodwill now follows the relation when rebellions and battle sites declare war, so the next goodwill update no longer ends the war silently.
 [*]If the settlement was destroyed or changed owner while its battle site waited, the attacker's win changes nothing, and a semi-simulation site is dropped at its timeout.
 [*]Battle sites no longer belong to your faction.
+[*]Battle sites are listed in the world map's "Jump to location" menu.
 [*]Pollution on a battle site map no longer costs you goodwill.
 [*]Once one army flees a battle, the other holds the field instead of fleeing too.
 [/list]
