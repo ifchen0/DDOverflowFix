@@ -94,6 +94,7 @@ namespace DDOverflowFix
             GUI.color = Color.white;
             Text.Anchor = anchor;
             BaseSiege.DrawSetting(listing);
+            ArenaSurvivors.DrawSetting(listing);
             return value;
         }
     }
