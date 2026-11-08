@@ -32,7 +32,7 @@ The settings show, for each event, the storyteller base count (0 turns it off), 
 [*]Battle sites are listed in the world map's "Jump to location" menu.
 [*]Pollution on a battle site map no longer costs you goodwill.
 [*]Once one army flees a battle, the other holds the field instead of fleeing too.
-[*]Surviving fighters of a battle without your colonists become world pawns instead of being deleted, so they can show up again later (on by default, option under the threat points).
+[*]Surviving fighters of a battle without your colonists become world pawns instead of being deleted, so they can show up again later; downed losers are taken prisoner by the winners (on by default, option under the threat points).
 [/list]
 
 [h2]9) Optional: battles on the settlement map[/h2]

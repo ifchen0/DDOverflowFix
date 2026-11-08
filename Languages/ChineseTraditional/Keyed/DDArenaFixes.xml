@@ -13,5 +13,5 @@
   <DDAF_BaseSiegeChance>在據點地圖開戰的機率：{0}</DDAF_BaseSiegeChance>
   <DDAF_BaseSiegeChanceDesc>征服戰役改在依爭奪據點生成的地圖上進行：守方以地圖自帶的守軍據守基地（有安裝Custom Base Framework時使用它的基地，Better Settlement Defense的守軍戰術也會生效），攻方使用基本AI。設為0即關閉。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_BaseSiegeChanceDesc>
   <DDAF_KeepSurvivors>倖存者回到世界</DDAF_KeepSurvivors>
-  <DDAF_KeepSurvivorsDesc>沒有殖民者參與的戰役結束時，存活的戰鬥人員會像離開地圖的襲擊者一樣成為世界人物，而不是被刪除，之後可能再出現在襲擊、商隊或其他戰役中。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_KeepSurvivorsDesc>
+  <DDAF_KeepSurvivorsDesc>沒有殖民者參與的戰役結束時，存活的戰鬥人員會像離開地圖的襲擊者一樣成為世界人物，而不是被刪除，之後可能再出現在襲擊、商隊或其他戰役中。戰敗方倒地的人則會被勝方俘虜，日後可能加入勝方。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_KeepSurvivorsDesc>
 </LanguageData>

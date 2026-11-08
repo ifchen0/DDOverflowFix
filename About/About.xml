@@ -38,7 +38,7 @@ The settings show, for each event, the storyteller base count (0 turns it off), 
 - Battle sites are listed in the world map's "Jump to location" menu.
 - Pollution on a battle site map no longer costs you goodwill.
 - Once one army flees a battle, the other holds the field instead of fleeing too.
-- Surviving fighters of a battle without your colonists become world pawns instead of being deleted, so they can show up again later (on by default, option under the threat points).
+- Surviving fighters of a battle without your colonists become world pawns instead of being deleted, so they can show up again later; downed losers are taken prisoner by the winners (on by default, option under the threat points).
 
 9) Optional: battles on the settlement map
 A fourth arena style: the map is generated like the contested settlement's own, and the defender holds that base with its garrison while the attacker uses the basic AI. Custom Base Framework bases and Better Settlement Defense roles apply when installed. Only the garrison counts for the result. Chance per battle is set under the threat points (default 25%, 0 turns it off). Defenders win most of these fights, and the map takes a few seconds to generate.
