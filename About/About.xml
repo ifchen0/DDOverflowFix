@@ -43,6 +43,7 @@ The settings show, for each event, the storyteller base count (0 turns it off), 
 
 9) Optional: battles on the settlement map
 A fourth arena style: the map is generated like the contested settlement's own, and the defender holds that base with its garrison while the attacker uses the basic AI. Custom Base Framework bases and Better Settlement Defense roles apply when installed. Only the garrison counts for the result. Chance per battle is set under the threat points (default 25%, 0 turns it off). Defenders win most of these fights, and the map takes a few seconds to generate.
+The stronger the defenders are than the attackers, the likelier pirates drop in on them by drop pod, so these fights are not decided before they start: the gap 1 - attacker / defender combat power (1.5x is 33%, 2x is 50%) is the chance and also the pirates' share of the threat points, up to half. The pirates are a permanently hostile industrial-or-later faction, fight for themselves and do not decide the outcome. Applies to every battle, but mostly fires here; option under the threat points, on by default.
 
 Notes:
 - A fresh install (no Dynamic Diplomacy settings saved yet) starts with simulated conquest, semi-simulation, distance calculation, alliance, expansion and clone faction on; ideology change and permanent enemies off; raze chance 50% (razed settlements free room, so expansion goes on once the world reaches the expansion limit) and raze clearing ruins on; exclude Empire on; extra diplomacy, conquest and expansion events at 1% per 6 hours. Saved settings are unchanged.
