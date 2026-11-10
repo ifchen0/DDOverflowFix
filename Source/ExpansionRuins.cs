@@ -75,14 +75,33 @@ namespace DDOverflowFix
             chosen = null;
             if (Rand.Chance(RuinChance))
             {
-                List<DestroyedSettlement> ruins = Find.WorldObjects.DestroyedSettlements.Where(CanResettle).ToList();
-                if (ruins.Count > 0)
-                {
-                    chosen = ruins.RandomElement();
+                int radius = DynamicDiplomacy.NPCDiploSettings.Instance.settings.repExpansionRadius;
+                List<Settlement> npc = Find.WorldObjects.Settlements
+                    .Where(s => s.Faction != null && !s.Faction.IsPlayer && s.Faction.def.settlementGenerationWeight != 0f).ToList();
+                chosen = Find.WorldObjects.DestroyedSettlements.InRandomOrder()
+                    .FirstOrDefault(r => CanResettle(r) && NpcSettlementWithin(r.Tile, npc, radius));
+                if (chosen != null)
                     return chosen.Tile;
-                }
             }
             return TileFinder.RandomStartingTile();
+        }
+
+        /// <summary>
+        /// Dynamic Diplomacy only expands when an NPC settlement is within its expansion radius of the new tile (by
+        /// traversal distance); a ruin without one would make the whole expansion fail.
+        /// </summary>
+        private static bool NpcSettlementWithin(PlanetTile tile, List<Settlement> npc, int radius)
+        {
+            WorldGrid grid = Find.WorldGrid;
+            foreach (Settlement s in npc)
+            {
+                // Straight-line distance first, with a margin, so traversal only runs for settlements that could pass.
+                if (s.Tile.Layer != tile.Layer || grid.ApproxDistanceInTiles(tile, s.Tile) > radius * 1.5f)
+                    continue;
+                if (grid.TraversalDistanceBetween(tile, s.Tile, true, radius + 1) <= radius)
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>Vanilla's check counts the ruin itself as occupying the tile; the chosen ruin was checked without it.</summary>

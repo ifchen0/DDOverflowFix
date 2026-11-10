@@ -24,5 +24,5 @@
   <DDAF_WarnNoDistanceCalc>基於距離的算法已關閉，所以同盟永遠不會成立。</DDAF_WarnNoDistanceCalc>
   <DDAF_ExpansionLimitCurrent>（目前世界：{0}）</DDAF_ExpansionLimitCurrent>
   <DDAF_ExpansionLimitReached>（已達上限，目前世界：{0}，滑鼠停留查看說明）</DDAF_ExpansionLimitReached>
-  <DDAF_ExpansionLimitReachedDesc>世界上已有{0}個聚落，達到或超過此上限，所以擴張已經停止，低科技陣營較常擴張與重建廢墟也會跟著失去作用。請提高上限，或靠據點遭直接摧毀來降低數量。此警告由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_ExpansionLimitReachedDesc>
+  <DDAF_ExpansionLimitReachedDesc>世界上已有{0}個聚落，超過此上限，所以擴張已經停止，低科技陣營較常擴張與重建廢墟也會跟著失去作用。請提高上限，或靠據點遭直接摧毀來降低數量。此警告由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_ExpansionLimitReachedDesc>
 </LanguageData>

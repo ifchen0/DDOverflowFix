@@ -24,5 +24,5 @@
   <DDAF_WarnNoDistanceCalc>Distance-based calculation is off, so alliances never form.</DDAF_WarnNoDistanceCalc>
   <DDAF_ExpansionLimitCurrent>(world now: {0})</DDAF_ExpansionLimitCurrent>
   <DDAF_ExpansionLimitReached>(reached, world now: {0}, hover for details)</DDAF_ExpansionLimitReached>
-  <DDAF_ExpansionLimitReachedDesc>The world already has {0} settlements, at or above this limit, so expansion has stopped, and tech-weighted expansion and ruin resettling with it. Raise the limit, or let razed settlements bring the count down. Warning added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_ExpansionLimitReachedDesc>
+  <DDAF_ExpansionLimitReachedDesc>The world already has {0} settlements, above this limit, so expansion has stopped, and tech-weighted expansion and ruin resettling with it. Raise the limit, or let razed settlements bring the count down. Warning added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_ExpansionLimitReachedDesc>
 </LanguageData>

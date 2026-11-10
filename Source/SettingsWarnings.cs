@@ -63,7 +63,7 @@ namespace DDOverflowFix
             int count = SettlementCount();
             if (count >= 0)
             {
-                if (DD.repEnableExpansion && count >= DD.repMaxExpansionLimit)
+                if (DD.repEnableExpansion && count > DD.repMaxExpansionLimit)
                 {
                     label = label + " " + "DDAF_ExpansionLimitReached".Translate(count).Colorize(ColorLibrary.RedReadable);
                     tooltip = "DDAF_ExpansionLimitReachedDesc".Translate(count);

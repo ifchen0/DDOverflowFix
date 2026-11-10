@@ -78,38 +78,47 @@ namespace DDOverflowFix
                 if (attackers == null || defenders == null)
                     return;
 
+                Faction attackerAlly = null;
                 if (Dominance.IsDominant(baseDefender))
-                    Join(map, attackers, baseAttacker, baseDefender, fromEdge: false);
+                    attackerAlly = Join(map, attackers, baseAttacker, baseDefender, fromEdge: false);
+                // With both sides dominant, the defender's ally must also fight the attacker's ally, or the two allies
+                // can outlive the main forces without fighting each other and the battle never ends.
                 if (Dominance.IsDominant(baseAttacker))
-                    Join(map, defenders, baseDefender, baseAttacker, fromEdge: true, avoid: attackers);
+                    Join(map, defenders, baseDefender, baseAttacker, fromEdge: true, avoid: attackers, alsoHostileTo: attackerAlly);
             }
             catch (Exception e)
             {
-                Log.Warning("[DD Fixes & Tweaks] Could not add allied support to the battle: " + e.Message);
+                Exception cause = e is TargetInvocationException && e.InnerException != null ? e.InnerException : e;
+                Log.Warning("[DD Fixes & Tweaks] Could not add allied support to the battle: " + cause);
             }
         }
 
-        private static void Join(Map map, List<Pawn> side, Faction sideFaction, Faction dominant, bool fromEdge, List<Pawn> avoid = null)
+        /// <summary>Spawns one ally group for the side and returns its faction, or null when none joined.</summary>
+        private static Faction Join(Map map, List<Pawn> side, Faction sideFaction, Faction dominant, bool fromEdge,
+            List<Pawn> avoid = null, Faction alsoHostileTo = null)
         {
             Faction ally = Find.FactionManager.AllFactionsListForReading
                 .Where(f => f != sideFaction && f != dominant && !f.IsPlayer && !f.defeated && !f.def.hidden
                     && f.def.settlementGenerationWeight > 0f
-                    && f.RelationKindWith(sideFaction) == FactionRelationKind.Ally && f.HostileTo(dominant))
+                    && f.RelationKindWith(sideFaction) == FactionRelationKind.Ally && f.HostileTo(dominant)
+                    && (alsoHostileTo == null || (f != alsoHostileTo && f.HostileTo(alsoHostileTo))))
                 .RandomElementWithFallback();
             if (ally == null)
-                return;
+                return null;
 
             IntVec3 spot = fromEdge ? EdgeSpot(map, avoid) : SideSpot(map, side);
             if (!spot.IsValid)
-                return;
+                return null;
             var kinds = (List<PawnKindDef>)Arena.GenerateGroup.Invoke(null, new object[] { ally, Arena.Points * PointsShare });
             if (kinds == null || kinds.Count == 0)
-                return;
+                return null;
             var pawns = (List<Pawn>)SpawnPawnSet.Invoke(null, new object[] { map, kinds, spot, ally });
             if (pawns == null || pawns.Count == 0)
-                return;
-            LordMaker.MakeNewLord(ally, new LordJobRaidFactionFirstFlee(ally, dominant), map, pawns);
+                return null;
+            // Added before the lord so the outcome check and cleanup still see the pawns if the lord fails.
             side.AddRange(pawns);
+            LordMaker.MakeNewLord(ally, new LordJobRaidFactionFirstFlee(ally, dominant), map, pawns);
+            return ally;
         }
 
         private static IntVec3 SideSpot(Map map, List<Pawn> side)
