@@ -95,6 +95,7 @@ namespace DDOverflowFix
             Text.Anchor = anchor;
             BaseSiege.DrawSetting(listing);
             ArenaSurvivors.DrawSetting(listing);
+            Patch_Expansion_TechWeights.DrawSetting(listing);
             return value;
         }
     }

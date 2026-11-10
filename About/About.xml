@@ -25,10 +25,10 @@ Rebellions add factions that are never removed once defeated. Once a day, a defe
 A new option in Dynamic Diplomacy's settings (off by default) lets a random NPC faction make peace with you or turn hostile a set number of times per year. Goodwill only moves as far as needed (peace 0, war -75).
 
 6) Conquered settlements are destroyed properly
-Conquered, razed or split-off settlements are now destroyed the normal way, so other mods clean up after them (for example World Domination's turrets and buildings).
+Conquered, razed or split-off settlements are now destroyed the normal way, so other mods clean up after them (for example World Domination's turrets and buildings). Clearing ruins after a raze keeps ruins on roads, so roads do not end in empty land: road ends always stay, junctions unless a road-end ruin is within 5 tiles, and mid-road ruins only with no other ruin within 5 tiles.
 
-7) Event frequency in times per year
-The settings show, for each event, the storyteller base count (0 turns it off), an extra count per year that can go below the old minimum of 1% per 6 hours, and the total.
+7) Event frequency and expansion
+The settings show, for each event, the storyteller base count (0 turns it off), an extra count per year that can go below the old minimum of 1% per 6 hours, and the total. Expansion favours lower-tech factions: the faction that expands is picked with weight 1.5 tribal, 1.3 medieval, 1 industrial, 0.8 spacer, 0.6 ultra, so weaker armies make up ground elsewhere (on by default, option under the threat points).
 
 8) Alliance and relation fixes
 - With simulated conquest the "great alliance" step never ran. It now runs when a battle starts (with distance calculation on, as in the original) and honours "exclude Empire" and permanent enemies. A faction past 60% of all settlements is no longer spared.
@@ -45,7 +45,7 @@ The settings show, for each event, the storyteller base count (0 turns it off), 
 A fourth arena style: the map is generated like the contested settlement's own, and the defender holds that base with its garrison while the attacker uses the basic AI. Custom Base Framework bases and Better Settlement Defense roles apply when installed. Only the garrison counts for the result. Chance per battle is set under the threat points (default 25%, 0 turns it off). Defenders win most of these fights, and the map takes a few seconds to generate.
 
 Notes:
-- A fresh install (no Dynamic Diplomacy settings saved yet) starts with simulated conquest, semi-simulation, distance calculation, alliance, expansion and clone faction on; ideology change, permanent enemies and raze clearing ruins off; exclude Empire on; extra diplomacy, conquest and expansion events at 1% per 6 hours. Saved settings are unchanged.
+- A fresh install (no Dynamic Diplomacy settings saved yet) starts with simulated conquest, semi-simulation, distance calculation, alliance, expansion and clone faction on; ideology change and permanent enemies off; raze chance 50% (razed settlements free room, so expansion goes on once the world reaches the expansion limit) and raze clearing ruins on; exclude Empire on; extra diplomacy, conquest and expansion events at 1% per 6 hours. Saved settings are unchanged.
 - Safe to add to an existing save. Remove it only when no arena battle is in progress and no caravan is heading to enter one.
 - Load after Harmony and Dynamic Diplomacy - Continued.
 - "Reached max signals per frame (3000)" during NPC siege camps is logged as a warning instead of an error.

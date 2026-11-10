@@ -26,7 +26,10 @@ namespace DDOverflowFix
             s.repAllowAlliance = true;
             s.repAllowConvert = false;
             s.repAllowCloneFaction = true;
-            s.repAllowRazeClear = false;
+            // Clearing keeps ruins on roads (RuinClearing), so roads do not end in empty land.
+            s.repAllowRazeClear = true;
+            // Razing frees settlement slots, so expansion keeps going once the world reaches the expansion limit.
+            s.repRazeChance = 50;
             s.repExcludeEmpire = true;
             s.repAllowSimulatedConquest = true;
             s.repUsingSemiSimulation = true;

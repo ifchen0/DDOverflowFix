@@ -12,7 +12,8 @@ namespace DDOverflowFix
     /// WorldObjectsHolder.Remove instead of Destroy, so it is never marked destroyed and world object comps never get
     /// PostDestroy. Mods that clean up after a settlement in PostDestroy (World Domination's turrets, advanced buildings and
     /// build projects) then leave everything behind, and quests targeting it never get the Destroyed signal.
-    /// Every Remove call in DD is routed through a helper that destroys settlements properly; other objects are still removed.
+    /// Every Remove call in DD is routed through a helper that destroys settlements properly; other objects are still removed,
+    /// except ruins on the road network that RuinClearing keeps.
     /// </summary>
     [HarmonyPatch]
     public static class Patch_DD_RemoveSettlement
@@ -69,6 +70,9 @@ namespace DDOverflowFix
                     Log.Message($"[DD Arena Fixes] Destroyed replaced settlement {o.Label} instead of removing it.");
                 return;
             }
+            // Only DD's "clear ruins" step removes ruins; see RuinClearing for which ones stay.
+            if (o is DestroyedSettlement ruin && RuinClearing.Keep(ruin))
+                return;
             holder.Remove(o);
         }
     }
