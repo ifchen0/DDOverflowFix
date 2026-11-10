@@ -152,6 +152,9 @@ namespace DDOverflowFix
                 return;
 
             List<Faction> members = candidates.Where(_ => Rand.Chance(0.8f)).ToList();
+            // Dynamic Diplomacy announced an alliance (and started the cooldown) even when the roll left fewer than two members.
+            if (members.Count < 2)
+                return;
             foreach (Faction member in members)
                 Relations.Set(attacker, member, FactionRelationKind.Hostile);
             for (int i = 0; i < members.Count; i++)
