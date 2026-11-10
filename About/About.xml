@@ -5,7 +5,7 @@
   <packageId>ifchen0.ddoverflowfix</packageId>
   <supportedVersions><li>1.6</li><li>1.7</li></supportedVersions>
   <url>https://github.com/ifchen0/DDOverflowFix</url>
-  <description>Unofficial fixes and tweaks for Dynamic Diplomacy - Continued. The Workshop page's images show how a conquest battle plays out and what happens to captives.
+  <description>Unofficial fixes and tweaks for Dynamic Diplomacy - Continued. The Workshop page's images show how a conquest battle plays out, what happens to captives, how dominant factions are opposed, and how expansion and ruins work.
 
 Battles:
 - Conquest battles in long saves no longer throw System.OverflowException ... at DynamicDiplomacy.IncidentWorker_NPCConquest.InitArenaMap (about 37.5% of them did, and auto-calc decided).

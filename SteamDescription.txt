@@ -1,4 +1,4 @@
-Unofficial fixes and tweaks for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3220299022]Dynamic Diplomacy - Continued[/url]. The images above show how a conquest battle plays out and what happens to captives.
+Unofficial fixes and tweaks for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3220299022]Dynamic Diplomacy - Continued[/url]. The images above show how a conquest battle plays out, what happens to captives, how dominant factions are opposed, and how expansion and ruins work.
 
 [h2]Battles[/h2]
 [list]
