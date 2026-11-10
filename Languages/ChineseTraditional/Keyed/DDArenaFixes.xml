@@ -15,7 +15,7 @@
   <DDAF_Pirates>海盜空降突襲強勢守方</DDAF_Pirates>
   <DDAF_PiratesDesc>戰役中守方比攻方越強（例如防守完善的基地），越有可能有一個與雙方都敵對的海盜陣營以空投艙降落在守方陣地。差距＝1－攻方戰力÷守方戰力（以戰鬥人員的戰力計算，守方為攻方1.5倍時33%，2倍時50%，5倍時80%），既是觸發機率，也是海盜兵力佔征服威脅點數的比例，最多一半。海盜只為自己而戰，不影響戰役勝負。需要有工業時代以上的永久敵對陣營。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_PiratesDesc>
   <DDAF_KeepSurvivors>倖存者回到世界</DDAF_KeepSurvivors>
-  <DDAF_KeepSurvivorsDesc>沒有殖民者參與的戰役結束時，存活的戰鬥人員會像離開地圖的襲擊者一樣成為世界人物，而不是被刪除，之後可能再出現在襲擊、商隊或其他戰役中。戰敗方倒地的人則會被勝方俘虜，日後可能加入勝方。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_KeepSurvivorsDesc>
+  <DDAF_KeepSurvivorsDesc>沒有殖民者參與的戰役結束時，存活的戰鬥人員會像離開地圖的襲擊者一樣成為世界人物，而不是被刪除，之後可能再出現在襲擊、商隊或其他戰役中。戰敗方倒地的人則會被勝方俘虜，日後可能加入勝方（愚忠的俘虜不會加入）；俘虜也會不時逃脫（平均60天），兩陣營停戰或俘虜方被消滅時則會獲釋。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_KeepSurvivorsDesc>
   <DDAF_TechWeightedExpansion>低科技陣營較常擴張</DDAF_TechWeightedExpansion>
   <DDAF_TechWeightedExpansionDesc>建立新據點時，決定歸屬的附近據點會依其陣營的科技等級加權抽選：部落1.5、中世紀1.3、工業1、太空0.8、超科技0.6，讓軍力較弱的陣營在其他地方補回版圖。關閉時每個附近據點的機率相同，與Dynamic Diplomacy原本一樣。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_TechWeightedExpansionDesc>
   <DDAF_RazeChanceLow>（過低，滑鼠停留查看說明）</DDAF_RazeChanceLow>
