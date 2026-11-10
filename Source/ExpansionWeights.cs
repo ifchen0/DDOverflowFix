@@ -53,7 +53,10 @@ namespace DDOverflowFix
         public static void DrawSetting(Listing_Standard listing)
         {
             listing.Gap(4f);
-            listing.CheckboxLabeled("DDAF_TechWeightedExpansion".Translate(), ref Enabled, "DDAF_TechWeightedExpansionDesc".Translate());
+            TaggedString label = "DDAF_TechWeightedExpansion".Translate();
+            string tooltip = "DDAF_TechWeightedExpansionDesc".Translate();
+            SettingsWarnings.WarnIfNoExpansion(ref label, ref tooltip);
+            listing.CheckboxLabeled(label, ref Enabled, tooltip);
         }
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

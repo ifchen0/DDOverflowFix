@@ -56,7 +56,8 @@ namespace DDOverflowFix
     {
         // Player diplomacy rows, the per-year frequency rows (Frequency.cs), the settlement map chance (BaseSiege.cs)
         // the survivors checkbox (ArenaSurvivors.cs) and the tech-weighted expansion checkbox (ExpansionWeights.cs).
-        private const float ExtraHeight = 440f;
+        // Plus room for warning notes that wrap a label onto a second line (SettingsWarnings.cs).
+        private const float ExtraHeight = 500f;
 
         private static readonly FieldInfo IdeoBloc = AccessTools.Field(typeof(NPCDiploModSettings), nameof(NPCDiploModSettings.repAllowIdeoBloc));
         private static readonly MethodInfo Drawer = AccessTools.Method(typeof(Patch_NPCDiploSettings_PlayerDiplomacyOption), nameof(CheckboxThenOption));

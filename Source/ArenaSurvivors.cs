@@ -87,7 +87,10 @@ namespace DDOverflowFix
         public static void DrawSetting(Listing_Standard listing)
         {
             listing.Gap(4f);
-            listing.CheckboxLabeled("DDAF_KeepSurvivors".Translate(), ref Enabled, "DDAF_KeepSurvivorsDesc".Translate());
+            TaggedString label = "DDAF_KeepSurvivors".Translate();
+            string tooltip = "DDAF_KeepSurvivorsDesc".Translate();
+            SettingsWarnings.WarnIfNoBattles(ref label, ref tooltip);
+            listing.CheckboxLabeled(label, ref Enabled, tooltip);
         }
     }
 

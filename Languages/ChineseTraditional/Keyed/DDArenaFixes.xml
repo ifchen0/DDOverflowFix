@@ -16,4 +16,13 @@
   <DDAF_KeepSurvivorsDesc>沒有殖民者參與的戰役結束時，存活的戰鬥人員會像離開地圖的襲擊者一樣成為世界人物，而不是被刪除，之後可能再出現在襲擊、商隊或其他戰役中。戰敗方倒地的人則會被勝方俘虜，日後可能加入勝方。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_KeepSurvivorsDesc>
   <DDAF_TechWeightedExpansion>低科技陣營較常擴張</DDAF_TechWeightedExpansion>
   <DDAF_TechWeightedExpansionDesc>建立新據點時，決定歸屬的附近據點會依其陣營的科技等級加權抽選：部落1.5、中世紀1.3、工業1、太空0.8、超科技0.6，讓軍力較弱的陣營在其他地方補回版圖。關閉時每個附近據點的機率相同，與Dynamic Diplomacy原本一樣。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_TechWeightedExpansionDesc>
+  <DDAF_RazeChanceLow>（過低，滑鼠停留查看說明）</DDAF_RazeChanceLow>
+  <DDAF_RazeChanceLowDesc>被占領的據點遭直接摧毀，是據點從世界上消失的唯一途徑。機率低於{0}%時，世界很快就會達到擴張上限而停止擴張，低科技陣營較常擴張與重建廢墟也會跟著失去作用，可供清除的廢墟也會很少。此警告由Dynamic Diplomacy Arena Fixes加入。</DDAF_RazeChanceLowDesc>
+  <DDAF_SettingNoEffect>（目前無作用，滑鼠停留查看說明）</DDAF_SettingNoEffect>
+  <DDAF_WarnNoSimulatedConquest>「在遊戲內模擬戰鬥決出事件結果」已關閉，不會有在地圖上進行的戰鬥，所以此選項沒有作用。</DDAF_WarnNoSimulatedConquest>
+  <DDAF_WarnNoExpansion>擴張事件已關閉，所以此選項沒有作用。</DDAF_WarnNoExpansion>
+  <DDAF_WarnNoDistanceCalc>基於距離的算法已關閉，所以同盟永遠不會成立。</DDAF_WarnNoDistanceCalc>
+  <DDAF_ExpansionLimitCurrent>（目前世界：{0}）</DDAF_ExpansionLimitCurrent>
+  <DDAF_ExpansionLimitReached>（已達上限，目前世界：{0}，滑鼠停留查看說明）</DDAF_ExpansionLimitReached>
+  <DDAF_ExpansionLimitReachedDesc>世界上已有{0}個聚落，達到或超過此上限，所以擴張已經停止，低科技陣營較常擴張與重建廢墟也會跟著失去作用。請提高上限，或靠據點遭直接摧毀來降低數量。此警告由Dynamic Diplomacy Arena Fixes加入。</DDAF_ExpansionLimitReachedDesc>
 </LanguageData>

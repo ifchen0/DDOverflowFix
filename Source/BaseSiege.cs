@@ -90,7 +90,10 @@ namespace DDOverflowFix
         public static void DrawSetting(Listing_Standard listing)
         {
             listing.Gap(4f);
-            listing.Label("DDAF_BaseSiegeChance".Translate(Chance.ToStringPercent()), -1f, "DDAF_BaseSiegeChanceDesc".Translate());
+            TaggedString label = "DDAF_BaseSiegeChance".Translate(Chance.ToStringPercent());
+            string tooltip = "DDAF_BaseSiegeChanceDesc".Translate();
+            SettingsWarnings.WarnIfNoBattles(ref label, ref tooltip);
+            listing.Label(label, -1f, tooltip);
             Chance = Mathf.Round(listing.Slider(Chance, 0f, 1f) * 20f) / 20f;
         }
     }
