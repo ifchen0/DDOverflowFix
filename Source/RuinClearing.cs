@@ -29,7 +29,11 @@ namespace DDOverflowFix
                 if (other == ruin || !other.Spawned || other.Tile.Layer != ruin.Tile.Layer
                     || Find.WorldGrid.ApproxDistanceInTiles(other.Tile, ruin.Tile) > NearbyTiles)
                     continue;
-                if (!junction || RoadLinks(other.Tile) == 1)
+                // Off-road ruins are cleared in the same pass, so they do not count as neighbours.
+                int otherRoads = RoadLinks(other.Tile);
+                if (otherRoads == 0)
+                    continue;
+                if (!junction || otherRoads == 1)
                     return false;
             }
             return true;
