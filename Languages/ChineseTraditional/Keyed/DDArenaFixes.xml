@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <DDAF_PlayerDiplomacy>外交變動可包含玩家陣營</DDAF_PlayerDiplomacy>
-  <DDAF_PlayerDiplomacyDesc>每年約依下方次數，隨機一個NPC陣營與你講和（原本敵對時）或轉為敵對。好感度只調整到剛好改變關係（和平：0，戰爭：-75）。沿用上方的外交變動、永久敵對、排除帝國與意識形態集團設定。此選項由Dynamic Diplomacy Arena Fixes加入。</DDAF_PlayerDiplomacyDesc>
+  <DDAF_PlayerDiplomacyDesc>每年約依下方次數，隨機一個NPC陣營與你講和（原本敵對時）或轉為敵對。好感度只調整到剛好改變關係（和平：0，戰爭：-75）。沿用上方的外交變動、永久敵對、排除帝國與意識形態集團設定。此選項由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_PlayerDiplomacyDesc>
   <DDAF_PlayerDiplomacyPerYear>每年次數：{0}</DDAF_PlayerDiplomacyPerYear>
   <DDAF_BasePerYear>基本每年次數：{0}</DDAF_BasePerYear>
-  <DDAF_BasePerYearDesc>Dynamic Diplomacy另外把這個事件加進所有說書人，不受額外機率影響（原本外交變動每年2-4次、征服每年3-5次）。設為0即關閉。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_BasePerYearDesc>
+  <DDAF_BasePerYearDesc>Dynamic Diplomacy另外把這個事件加進所有說書人，不受額外機率影響（原本外交變動每年2-4次、征服每年3-5次）。設為0即關閉。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_BasePerYearDesc>
   <DDAF_ExtraPerYear>額外每年次數：{0}</DDAF_ExtraPerYear>
-  <DDAF_ExtraPerYearDesc>每6小時擲一次。取代原本以整數百分比設定的機率（每6小時1% = 每年2.4次），因此可以設得更低。找不到合適目標時事件不會發生。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_ExtraPerYearDesc>
+  <DDAF_ExtraPerYearDesc>每6小時擲一次。取代原本以整數百分比設定的機率（每6小時1% = 每年2.4次），因此可以設得更低。找不到合適目標時事件不會發生。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_ExtraPerYearDesc>
   <DDAF_TotalPerYear>合計：每年約{0}次</DDAF_TotalPerYear>
   <DDAF_ArenaAttacking>{0} 攻擊 {1}</DDAF_ArenaAttacking>
   <DDAF_ConquestBattleStart>{0} 的軍隊正在進攻 {1} 的 {2}，戰鬥很快就會開始</DDAF_ConquestBattleStart>
   <DDAF_BaseSiegeChance>在據點地圖開戰的機率：{0}</DDAF_BaseSiegeChance>
-  <DDAF_BaseSiegeChanceDesc>征服戰役改在依爭奪據點生成的地圖上進行：守方以地圖自帶的守軍據守基地（有安裝Custom Base Framework時使用它的基地，Better Settlement Defense的守軍戰術也會生效），攻方使用基本AI。設為0即關閉。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_BaseSiegeChanceDesc>
+  <DDAF_BaseSiegeChanceDesc>征服戰役改在依爭奪據點生成的地圖上進行：守方以地圖自帶的守軍據守基地（有安裝Custom Base Framework時使用它的基地，Better Settlement Defense的守軍戰術也會生效），攻方使用基本AI。設為0即關閉。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_BaseSiegeChanceDesc>
   <DDAF_KeepSurvivors>倖存者回到世界</DDAF_KeepSurvivors>
-  <DDAF_KeepSurvivorsDesc>沒有殖民者參與的戰役結束時，存活的戰鬥人員會像離開地圖的襲擊者一樣成為世界人物，而不是被刪除，之後可能再出現在襲擊、商隊或其他戰役中。戰敗方倒地的人則會被勝方俘虜，日後可能加入勝方。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_KeepSurvivorsDesc>
+  <DDAF_KeepSurvivorsDesc>沒有殖民者參與的戰役結束時，存活的戰鬥人員會像離開地圖的襲擊者一樣成為世界人物，而不是被刪除，之後可能再出現在襲擊、商隊或其他戰役中。戰敗方倒地的人則會被勝方俘虜，日後可能加入勝方。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_KeepSurvivorsDesc>
   <DDAF_TechWeightedExpansion>低科技陣營較常擴張</DDAF_TechWeightedExpansion>
-  <DDAF_TechWeightedExpansionDesc>建立新據點時，決定歸屬的附近據點會依其陣營的科技等級加權抽選：部落1.5、中世紀1.3、工業1、太空0.8、超科技0.6，讓軍力較弱的陣營在其他地方補回版圖。關閉時每個附近據點的機率相同，與Dynamic Diplomacy原本一樣。此設定由Dynamic Diplomacy Arena Fixes加入。</DDAF_TechWeightedExpansionDesc>
+  <DDAF_TechWeightedExpansionDesc>建立新據點時，決定歸屬的附近據點會依其陣營的科技等級加權抽選：部落1.5、中世紀1.3、工業1、太空0.8、超科技0.6，讓軍力較弱的陣營在其他地方補回版圖。關閉時每個附近據點的機率相同，與Dynamic Diplomacy原本一樣。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_TechWeightedExpansionDesc>
   <DDAF_RazeChanceLow>（過低，滑鼠停留查看說明）</DDAF_RazeChanceLow>
-  <DDAF_RazeChanceLowDesc>被占領的據點遭直接摧毀，是據點從世界上消失的唯一途徑。機率低於{0}%時，世界很快就會達到擴張上限而停止擴張，低科技陣營較常擴張與重建廢墟也會跟著失去作用，可供清除的廢墟也會很少。此警告由Dynamic Diplomacy Arena Fixes加入。</DDAF_RazeChanceLowDesc>
+  <DDAF_RazeChanceLowDesc>被占領的據點遭直接摧毀，是據點從世界上消失的唯一途徑。機率低於{0}%時，世界很快就會達到擴張上限而停止擴張，低科技陣營較常擴張與重建廢墟也會跟著失去作用，可供清除的廢墟也會很少。此警告由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_RazeChanceLowDesc>
   <DDAF_SettingNoEffect>（目前無作用，滑鼠停留查看說明）</DDAF_SettingNoEffect>
   <DDAF_WarnNoSimulatedConquest>「在遊戲內模擬戰鬥決出事件結果」已關閉，不會有在地圖上進行的戰鬥，所以此選項沒有作用。</DDAF_WarnNoSimulatedConquest>
   <DDAF_WarnNoExpansion>擴張事件已關閉，所以此選項沒有作用。</DDAF_WarnNoExpansion>
   <DDAF_WarnNoDistanceCalc>基於距離的算法已關閉，所以同盟永遠不會成立。</DDAF_WarnNoDistanceCalc>
   <DDAF_ExpansionLimitCurrent>（目前世界：{0}）</DDAF_ExpansionLimitCurrent>
   <DDAF_ExpansionLimitReached>（已達上限，目前世界：{0}，滑鼠停留查看說明）</DDAF_ExpansionLimitReached>
-  <DDAF_ExpansionLimitReachedDesc>世界上已有{0}個聚落，達到或超過此上限，所以擴張已經停止，低科技陣營較常擴張與重建廢墟也會跟著失去作用。請提高上限，或靠據點遭直接摧毀來降低數量。此警告由Dynamic Diplomacy Arena Fixes加入。</DDAF_ExpansionLimitReachedDesc>
+  <DDAF_ExpansionLimitReachedDesc>世界上已有{0}個聚落，達到或超過此上限，所以擴張已經停止，低科技陣營較常擴張與重建廢墟也會跟著失去作用。請提高上限，或靠據點遭直接摧毀來降低數量。此警告由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_ExpansionLimitReachedDesc>
 </LanguageData>

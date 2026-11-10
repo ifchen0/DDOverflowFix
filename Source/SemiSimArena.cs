@@ -80,7 +80,7 @@ namespace DDOverflowFix
             {
                 // Lost or taken by someone else while the site waited: no fight and no result (isCombatEnded is
                 // already set, so DD removes the site).
-                Log.Message($"[DD Overflow Fix] {combatLoc.Name} is gone or no longer held by the defender; the battle site is dropped.");
+                Log.Message($"[DD Fixes & Tweaks] {combatLoc.Name} is gone or no longer held by the defender; the battle site is dropped.");
                 return false;
             }
 
@@ -102,13 +102,13 @@ namespace DDOverflowFix
                     Relations.Set(attacker, defender, FactionRelationKind.Hostile);
                 object lhs = Arena.GenerateGroup.Invoke(null, new object[] { attacker, Arena.Points });
                 object rhs = Arena.GenerateGroup.Invoke(null, new object[] { defender, Arena.Points });
-                Log.Message($"[DD Overflow Fix] Nobody joined the battle for {combatLoc.Name}; starting the arena fight.");
+                Log.Message($"[DD Fixes & Tweaks] Nobody joined the battle for {combatLoc.Name}; starting the arena fight.");
                 Arena.InitArenaMap.Invoke(null, new object[] { __instance, attacker, defender, combatLoc, lhs, rhs, false, null });
                 return false;
             }
             catch (Exception e)
             {
-                Log.Error($"[DD Overflow Fix] Could not start the arena fight, falling back to auto-calc: {e}");
+                Log.Error($"[DD Fixes & Tweaks] Could not start the arena fight, falling back to auto-calc: {e}");
                 Arena.IsCombatEnded(__instance) = true;
                 return true;
             }

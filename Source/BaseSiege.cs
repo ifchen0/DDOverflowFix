@@ -129,7 +129,7 @@ namespace DDOverflowFix
             catch (Exception e)
             {
                 BaseSiege.EndGeneration();
-                Log.Warning("[DD Arena Fixes] Could not set up a settlement map for the battle, using the open field: " + e.Message);
+                Log.Warning("[DD Fixes & Tweaks] Could not set up a settlement map for the battle, using the open field: " + e.Message);
             }
         }
 
@@ -178,7 +178,7 @@ namespace DDOverflowFix
             List<Pawn> garrison = BaseSiege.Garrison(map, faction);
             if (garrison.Count == 0)
             {
-                Log.Warning("[DD Arena Fixes] Settlement map for the battle has no garrison; the defender spawns at the map edge instead.");
+                Log.Warning("[DD Fixes & Tweaks] Settlement map for the battle has no garrison; the defender spawns at the map edge instead.");
                 return true;
             }
             BaseSiege.ActiveGarrison = garrison;

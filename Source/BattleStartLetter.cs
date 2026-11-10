@@ -40,7 +40,7 @@ namespace DDOverflowFix
                 yield return code;
             }
             if (replaced == 0)
-                Log.Warning("[DD Arena Fixes] Battle start letter not found in " + original.Name + "; keeping the original text.");
+                Log.Warning("[DD Fixes & Tweaks] Battle start letter not found in " + original.Name + "; keeping the original text.");
         }
     }
 }

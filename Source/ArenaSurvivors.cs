@@ -120,7 +120,7 @@ namespace DDOverflowFix
                 yield return code;
             }
             if (replaced == 0)
-                Log.Warning("[DD Arena Fixes] Fighter cleanup not found in the battle site tick; survivors are still removed.");
+                Log.Warning("[DD Fixes & Tweaks] Fighter cleanup not found in the battle site tick; survivors are still removed.");
         }
     }
 }

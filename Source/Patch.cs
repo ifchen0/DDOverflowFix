@@ -43,7 +43,7 @@ namespace DDOverflowFix
                 yield return ins;
             }
             if (replaced == 0)
-                Log.Warning("[DD Overflow Fix] int.Parse not found in InitArenaMap; the mod may have been updated and this patch is no longer needed.");
+                Log.Warning("[DD Fixes & Tweaks] int.Parse not found in InitArenaMap; the mod may have been updated and this patch is no longer needed.");
         }
 
         /// <summary>

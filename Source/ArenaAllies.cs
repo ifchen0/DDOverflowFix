@@ -85,7 +85,7 @@ namespace DDOverflowFix
             }
             catch (Exception e)
             {
-                Log.Warning("[DD Arena Fixes] Could not add allied support to the battle: " + e.Message);
+                Log.Warning("[DD Fixes & Tweaks] Could not add allied support to the battle: " + e.Message);
             }
         }
 

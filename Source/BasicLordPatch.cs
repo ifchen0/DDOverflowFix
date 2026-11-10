@@ -92,7 +92,7 @@ namespace DDOverflowFix
             }
             catch (Exception e)
             {
-                Log.Warning("[DD Overflow Fix] Custom basic arena AI failed, falling back to original: " + e.Message);
+                Log.Warning("[DD Fixes & Tweaks] Custom basic arena AI failed, falling back to original: " + e.Message);
                 return true;
             }
         }

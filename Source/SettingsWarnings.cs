@@ -116,7 +116,7 @@ namespace DDOverflowFix
                 yield return ins;
             }
             foreach (string key in targets.Keys.Where(k => !found.Contains(k)))
-                Log.Warning($"[DD Arena Fixes] {key} row not found in Dynamic Diplomacy settings; no warning for it.");
+                Log.Warning($"[DD Fixes & Tweaks] {key} row not found in Dynamic Diplomacy settings; no warning for it.");
         }
     }
 }

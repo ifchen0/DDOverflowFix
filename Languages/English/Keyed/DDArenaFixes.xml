@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <DDAF_PlayerDiplomacy>Diplomacy changes can involve your faction</DDAF_PlayerDiplomacy>
-  <DDAF_PlayerDiplomacyDesc>About the number of times per year set below, a random NPC faction makes peace with you (if hostile) or turns hostile. Goodwill moves just far enough to change the relation (peace: 0, war: -75). Follows the diplomacy change, permanent enemy, exclude Empire and ideo bloc settings above. Added by Dynamic Diplomacy Arena Fixes.</DDAF_PlayerDiplomacyDesc>
+  <DDAF_PlayerDiplomacyDesc>About the number of times per year set below, a random NPC faction makes peace with you (if hostile) or turns hostile. Goodwill moves just far enough to change the relation (peace: 0, war: -75). Follows the diplomacy change, permanent enemy, exclude Empire and ideo bloc settings above. Added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_PlayerDiplomacyDesc>
   <DDAF_PlayerDiplomacyPerYear>Times per year: {0}</DDAF_PlayerDiplomacyPerYear>
   <DDAF_BasePerYear>Base times per year: {0}</DDAF_BasePerYear>
-  <DDAF_BasePerYearDesc>Dynamic Diplomacy also adds this event to every storyteller, independent of the extra chance (originally 2-4 diplomacy changes and 3-5 conquests per year). 0 turns that off. Set by Dynamic Diplomacy Arena Fixes.</DDAF_BasePerYearDesc>
+  <DDAF_BasePerYearDesc>Dynamic Diplomacy also adds this event to every storyteller, independent of the extra chance (originally 2-4 diplomacy changes and 3-5 conquests per year). 0 turns that off. Set by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_BasePerYearDesc>
   <DDAF_ExtraPerYear>Extra times per year: {0}</DDAF_ExtraPerYear>
-  <DDAF_ExtraPerYearDesc>Rolled every 6 hours. Replaces the old whole-percent chance (1% per 6 hours = 2.4 times per year), so lower values are possible. An event that finds no valid target does nothing. Set by Dynamic Diplomacy Arena Fixes.</DDAF_ExtraPerYearDesc>
+  <DDAF_ExtraPerYearDesc>Rolled every 6 hours. Replaces the old whole-percent chance (1% per 6 hours = 2.4 times per year), so lower values are possible. An event that finds no valid target does nothing. Set by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_ExtraPerYearDesc>
   <DDAF_TotalPerYear>Total: about {0} times per year</DDAF_TotalPerYear>
   <DDAF_ArenaAttacking>{0} attacking {1}</DDAF_ArenaAttacking>
   <DDAF_ConquestBattleStart>{0} forces are about to engage defensive forces in {1} settlement of {2}. The fighting will start soon.</DDAF_ConquestBattleStart>
   <DDAF_BaseSiegeChance>Battle on the settlement map: {0}</DDAF_BaseSiegeChance>
-  <DDAF_BaseSiegeChanceDesc>Chance that a conquest battle is fought on a map generated like the contested settlement: the defender holds its base with the garrison that map comes with (Custom Base Framework bases and Better Settlement Defense roles apply when installed), and the attacker uses the basic arena AI. 0 turns it off. Added by Dynamic Diplomacy Arena Fixes.</DDAF_BaseSiegeChanceDesc>
+  <DDAF_BaseSiegeChanceDesc>Chance that a conquest battle is fought on a map generated like the contested settlement: the defender holds its base with the garrison that map comes with (Custom Base Framework bases and Better Settlement Defense roles apply when installed), and the attacker uses the basic arena AI. 0 turns it off. Added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_BaseSiegeChanceDesc>
   <DDAF_KeepSurvivors>Survivors return to the world</DDAF_KeepSurvivors>
-  <DDAF_KeepSurvivorsDesc>When a battle without your colonists ends, living fighters leave the map and become world pawns, like raiders who leave a map, instead of being deleted. They can show up again later in raids, caravans or other battles. Downed fighters of the losing side are taken prisoner by the winners instead and may join them over time. Added by Dynamic Diplomacy Arena Fixes.</DDAF_KeepSurvivorsDesc>
+  <DDAF_KeepSurvivorsDesc>When a battle without your colonists ends, living fighters leave the map and become world pawns, like raiders who leave a map, instead of being deleted. They can show up again later in raids, caravans or other battles. Downed fighters of the losing side are taken prisoner by the winners instead and may join them over time. Added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_KeepSurvivorsDesc>
   <DDAF_TechWeightedExpansion>Lower-tech factions expand more</DDAF_TechWeightedExpansion>
-  <DDAF_TechWeightedExpansionDesc>When a new settlement is founded, the nearby settlement whose faction gets it is picked with weight 1.5 tribal, 1.3 medieval, 1 industrial, 0.8 spacer, 0.6 ultra, so factions with weaker armies make up ground elsewhere. Off: every nearby settlement counts the same, as in Dynamic Diplomacy. Added by Dynamic Diplomacy Arena Fixes.</DDAF_TechWeightedExpansionDesc>
+  <DDAF_TechWeightedExpansionDesc>When a new settlement is founded, the nearby settlement whose faction gets it is picked with weight 1.5 tribal, 1.3 medieval, 1 industrial, 0.8 spacer, 0.6 ultra, so factions with weaker armies make up ground elsewhere. Off: every nearby settlement counts the same, as in Dynamic Diplomacy. Added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_TechWeightedExpansionDesc>
   <DDAF_RazeChanceLow>(low, hover for details)</DDAF_RazeChanceLow>
-  <DDAF_RazeChanceLowDesc>Razing is the only way settlements leave the world. Below {0}%, the world soon reaches the expansion limit and expansion stops, so tech-weighted expansion and ruin resettling stop with it, and few ruins are left for clearing. Warning added by Dynamic Diplomacy Arena Fixes.</DDAF_RazeChanceLowDesc>
+  <DDAF_RazeChanceLowDesc>Razing is the only way settlements leave the world. Below {0}%, the world soon reaches the expansion limit and expansion stops, so tech-weighted expansion and ruin resettling stop with it, and few ruins are left for clearing. Warning added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_RazeChanceLowDesc>
   <DDAF_SettingNoEffect>(no effect now, hover for details)</DDAF_SettingNoEffect>
   <DDAF_WarnNoSimulatedConquest>"Simulate in-game battle" is off, so no battles are fought on a map and this does nothing.</DDAF_WarnNoSimulatedConquest>
   <DDAF_WarnNoExpansion>Expansion events are off, so this does nothing.</DDAF_WarnNoExpansion>
   <DDAF_WarnNoDistanceCalc>Distance-based calculation is off, so alliances never form.</DDAF_WarnNoDistanceCalc>
   <DDAF_ExpansionLimitCurrent>(world now: {0})</DDAF_ExpansionLimitCurrent>
   <DDAF_ExpansionLimitReached>(reached, world now: {0}, hover for details)</DDAF_ExpansionLimitReached>
-  <DDAF_ExpansionLimitReachedDesc>The world already has {0} settlements, at or above this limit, so expansion has stopped, and tech-weighted expansion and ruin resettling with it. Raise the limit, or let razed settlements bring the count down. Warning added by Dynamic Diplomacy Arena Fixes.</DDAF_ExpansionLimitReachedDesc>
+  <DDAF_ExpansionLimitReachedDesc>The world already has {0} settlements, at or above this limit, so expansion has stopped, and tech-weighted expansion and ruin resettling with it. Raise the limit, or let razed settlements bring the count down. Warning added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_ExpansionLimitReachedDesc>
 </LanguageData>

@@ -35,7 +35,7 @@ namespace DDOverflowFix
             }
             catch (Exception e)
             {
-                Log.Error("[DD Arena Fixes] Player diplomacy event failed: " + e);
+                Log.Error("[DD Fixes & Tweaks] Player diplomacy event failed: " + e);
             }
         }
 
@@ -129,7 +129,7 @@ namespace DDOverflowFix
             if (f.HostileTo(player) == wasHostile)
             {
                 result = $"Relation with {f.Name} did not change (goodwill {before} -> {after}).";
-                Log.Warning("[DD Arena Fixes] " + result);
+                Log.Warning("[DD Fixes & Tweaks] " + result);
                 return false;
             }
 

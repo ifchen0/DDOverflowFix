@@ -67,7 +67,7 @@ namespace DDOverflowFix
                 yield return code;
             }
             if (tiles != 1 || checks != 1)
-                Log.Warning($"[DD Arena Fixes] Expansion tile pick found {tiles}/{checks} times instead of once; ruins may not be resettled.");
+                Log.Warning($"[DD Fixes & Tweaks] Expansion tile pick found {tiles}/{checks} times instead of once; ruins may not be resettled.");
         }
 
         public static PlanetTile PickTile()

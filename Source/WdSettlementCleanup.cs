@@ -67,7 +67,7 @@ namespace DDOverflowFix
             {
                 o.Destroy();
                 if (Prefs.DevMode)
-                    Log.Message($"[DD Arena Fixes] Destroyed replaced settlement {o.Label} instead of removing it.");
+                    Log.Message($"[DD Fixes & Tweaks] Destroyed replaced settlement {o.Label} instead of removing it.");
                 return;
             }
             // Only DD's "clear ruins" step removes ruins; see RuinClearing for which ones stay.

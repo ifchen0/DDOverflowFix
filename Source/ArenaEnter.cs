@@ -53,7 +53,7 @@ namespace DDOverflowFix
                 }
                 catch (Exception e)
                 {
-                    Log.Error($"[DD Overflow Fix] Could not generate the battle site for the arriving caravan: {e}");
+                    Log.Error($"[DD Fixes & Tweaks] Could not generate the battle site for the arriving caravan: {e}");
                 }
             }
             // Same as vanilla Enter; if the map is still missing the caravan waits on the tile as after a plain move.

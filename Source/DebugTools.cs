@@ -182,7 +182,7 @@ namespace DDOverflowFix
             bool ended = t.Field("isCombatEnded").GetValue<bool>();
 
             var sb = new System.Text.StringBuilder();
-            sb.AppendLine($"[DD Overflow Fix] Arena '{parent.Label}' started={started} elapsed={Find.TickManager.TicksGame - started} ended={ended}");
+            sb.AppendLine($"[DD Fixes & Tweaks] Arena '{parent.Label}' started={started} elapsed={Find.TickManager.TicksGame - started} ended={ended}");
             List<Pawn> activeAtt = Dump(sb, "Attacker (lhs)", lhs);
             List<Pawn> activeDef = Dump(sb, "Defender (rhs)", rhs);
             Log.Message(sb.ToString());

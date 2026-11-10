@@ -1,4 +1,4 @@
-Unofficial fix for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3220299022]Dynamic Diplomacy - Continued[/url].
+Unofficial fixes and tweaks for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3220299022]Dynamic Diplomacy - Continued[/url].
 
 [h2]1) OverflowException in NPC conquest battles[/h2]
 [code]System.OverflowException: Value was either too large or too small for an Int32.

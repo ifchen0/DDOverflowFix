@@ -72,7 +72,7 @@ namespace DDOverflowFix
                 yield return code;
             }
             if (replaced != 1)
-                Log.Warning($"[DD Arena Fixes] Expansion pick found {replaced} times instead of once; tech level weights may not apply.");
+                Log.Warning($"[DD Fixes & Tweaks] Expansion pick found {replaced} times instead of once; tech level weights may not apply.");
         }
     }
 }

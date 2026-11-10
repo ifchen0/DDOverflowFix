@@ -44,7 +44,7 @@ namespace DDOverflowFix
                 }
             }
             if (replaced == 0)
-                Log.Warning("[DD Arena Fixes] Threat point slider not found in Dynamic Diplomacy settings; keeping the slider.");
+                Log.Warning("[DD Fixes & Tweaks] Threat point slider not found in Dynamic Diplomacy settings; keeping the slider.");
             return codes;
         }
 

@@ -44,7 +44,7 @@ namespace DDOverflowFix
             }
             catch (Exception e)
             {
-                Log.Error("[DD Arena Fixes] Faction cleanup failed: " + e);
+                Log.Error("[DD Fixes & Tweaks] Faction cleanup failed: " + e);
             }
         }
 
@@ -98,17 +98,17 @@ namespace DDOverflowFix
                     {
                         f.temporary = false;
                         blocked.Add((f, "vanilla Remove failed"));
-                        Log.Warning($"[DD Arena Fixes] Vanilla could not remove {name} (Faction_{id}); nothing else was changed: {e.InnerException ?? e}");
+                        Log.Warning($"[DD Fixes & Tweaks] Vanilla could not remove {name} (Faction_{id}); nothing else was changed: {e.InnerException ?? e}");
                         continue;
                     }
                     // Removed, but something hooked to the removal threw; the leftovers below still need clearing.
-                    Log.Warning($"[DD Arena Fixes] Error while removing {name} (Faction_{id}): {e.InnerException ?? e}");
+                    Log.Warning($"[DD Fixes & Tweaks] Error while removing {name} (Faction_{id}): {e.InnerException ?? e}");
                 }
                 if (Find.FactionManager.AllFactionsListForReading.Contains(f))
                 {
                     f.temporary = false;
                     blocked.Add((f, "vanilla Remove refused"));
-                    Log.Warning($"[DD Arena Fixes] Vanilla refused to remove {name} (Faction_{id}).");
+                    Log.Warning($"[DD Fixes & Tweaks] Vanilla refused to remove {name} (Faction_{id}).");
                     continue;
                 }
                 refs.ApplyRemovals();
@@ -121,7 +121,7 @@ namespace DDOverflowFix
                 }
                 KeepUsedIdeos(ideos, modHeldPawns);
                 removed.Add(f);
-                Log.Message($"[DD Arena Fixes] Removed defeated duplicate faction {name} ({f.def.defName}, Faction_{id}).");
+                Log.Message($"[DD Fixes & Tweaks] Removed defeated duplicate faction {name} ({f.def.defName}, Faction_{id}).");
             }
         }
 
@@ -222,7 +222,7 @@ namespace DDOverflowFix
                     }
                     catch (Exception e)
                     {
-                        Log.Warning("[DD Arena Fixes] Could not drop a removed faction from mod data: " + e.Message);
+                        Log.Warning("[DD Fixes & Tweaks] Could not drop a removed faction from mod data: " + e.Message);
                     }
                 }
             }
@@ -417,7 +417,7 @@ namespace DDOverflowFix
         {
             RemoveEligible(out List<Faction> removed, out List<(Faction faction, string reason)> blocked);
             foreach ((Faction faction, string reason) in blocked)
-                Log.Message($"[DD Arena Fixes] Kept {faction.Name} (Faction_{faction.loadID}) for now: {reason}.");
+                Log.Message($"[DD Fixes & Tweaks] Kept {faction.Name} (Faction_{faction.loadID}) for now: {reason}.");
             Messages.Message($"Removed {removed.Count} defeated duplicate faction(s), {blocked.Count} kept for now (see log).", MessageTypeDefOf.NeutralEvent, false);
         }
     }

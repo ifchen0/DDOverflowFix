@@ -85,7 +85,7 @@ namespace DDOverflowFix
                 }
             }
             if (!optionDone)
-                Log.Warning("[DD Arena Fixes] Ideo bloc checkbox not found in Dynamic Diplomacy settings; the player diplomacy option is not shown.");
+                Log.Warning("[DD Fixes & Tweaks] Ideo bloc checkbox not found in Dynamic Diplomacy settings; the player diplomacy option is not shown.");
             return codes;
         }
 

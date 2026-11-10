@@ -92,7 +92,7 @@ namespace DDOverflowFix
                 yield return ins;
             }
             if (replaced == 0)
-                Log.Warning($"[DD Arena Fixes] No relation kind writes found in {original.DeclaringType?.Name}.{original.Name}.");
+                Log.Warning($"[DD Fixes & Tweaks] No relation kind writes found in {original.DeclaringType?.Name}.{original.Name}.");
         }
     }
 
@@ -197,7 +197,7 @@ namespace DDOverflowFix
             Faction defender = Arena.DefenderFaction(__instance);
             if (Arena.StillContested(__instance))
                 return true;
-            Log.Message($"[DD Arena Fixes] {combatLoc?.Name ?? "Battle site settlement"} is gone or no longer held by {defender?.Name}; the attacker's win changes nothing.");
+            Log.Message($"[DD Fixes & Tweaks] {combatLoc?.Name ?? "Battle site settlement"} is gone or no longer held by {defender?.Name}; the attacker's win changes nothing.");
             return false;
         }
     }

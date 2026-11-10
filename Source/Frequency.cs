@@ -129,7 +129,7 @@ namespace DDOverflowFix
             }
             catch (Exception e)
             {
-                Log.Error($"[DD Arena Fixes] {defName} failed: {e}");
+                Log.Error($"[DD Fixes & Tweaks] {defName} failed: {e}");
             }
         }
     }
@@ -173,7 +173,7 @@ namespace DDOverflowFix
                 }
             }
             if (replaced != Frequency.IncidentNames.Length)
-                Log.Warning($"[DD Arena Fixes] Found {replaced} of {Frequency.IncidentNames.Length} event chance sliders in Dynamic Diplomacy settings.");
+                Log.Warning($"[DD Fixes & Tweaks] Found {replaced} of {Frequency.IncidentNames.Length} event chance sliders in Dynamic Diplomacy settings.");
             return codes;
         }
 
