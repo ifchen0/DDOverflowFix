@@ -137,21 +137,18 @@ namespace DDOverflowFix
                 DiplomacyWorldComponent.allianceCooldown--;
         }
 
-        /// <summary>Dynamic Diplomacy's rule: a faction holding 40-60% (and more than 9) of all NPC settlements faces a coalition.</summary>
+        /// <summary>
+        /// Dynamic Diplomacy's rule: a dominant faction faces a coalition. Its 60% upper bound is dropped, so a faction
+        /// past it is not spared.
+        /// </summary>
         private static void TryFormAlliance(Faction attacker, NPCDiploModSettings dd)
         {
-            int total = 0, own = 0;
-            foreach (Settlement s in Find.WorldObjects.Settlements)
-            {
-                if (s.Faction == attacker)
-                    own++;
-                if (s.Faction != null && !s.Faction.IsPlayer && s.Faction.def.settlementGenerationWeight > 0f && !s.def.defName.StartsWith("City_"))
-                    total++;
-            }
+            if (!Dominance.IsDominant(attacker))
+                return;
             List<Faction> candidates = Find.FactionManager.AllFactionsVisible.Where(f => f.def.settlementGenerationWeight > 0f
                 && !f.def.hidden && !f.IsPlayer && !f.defeated && f != attacker && f.leader != null && !f.leader.IsPrisoner && !f.leader.Spawned
                 && (dd.repAllowPerm || !f.def.permanentEnemy) && (!dd.repExcludeEmpire || f.def != FactionDefOf.Empire)).ToList();
-            if (candidates.Count < 2 || own <= 9 || own < total * 0.4f || own > total * 0.6f)
+            if (candidates.Count < 2)
                 return;
 
             List<Faction> members = candidates.Where(_ => Rand.Chance(0.8f)).ToList();

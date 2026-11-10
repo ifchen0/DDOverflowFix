@@ -25,7 +25,8 @@ The settings show, for each event, the storyteller base count (0 turns it off), 
 
 [h2]8) Alliance and relation fixes[/h2]
 [list]
-[*]With simulated conquest the "great alliance" step never ran. It now runs when a battle starts (with distance calculation on, as in the original) and honours "exclude Empire" and permanent enemies.
+[*]With simulated conquest the "great alliance" step never ran. It now runs when a battle starts (with distance calculation on, as in the original) and honours "exclude Empire" and permanent enemies. A faction past 60% of all settlements is no longer spared.
+[*]When one side of a battle holds at least 40% (and more than 9) of all NPC settlements, one ally of the other side that is also at war with it joins with half the threat points: beside the attacker, or from the map edge to relieve the defender.
 [*]Goodwill now follows the relation when rebellions and battle sites declare war, so the next goodwill update no longer ends the war silently.
 [*]If the settlement was destroyed or changed owner while its battle site waited, the attacker's win changes nothing, and a semi-simulation site is dropped at its timeout.
 [*]Battle sites no longer belong to your faction.
