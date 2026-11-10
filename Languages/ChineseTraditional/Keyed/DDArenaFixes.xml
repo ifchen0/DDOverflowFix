@@ -12,6 +12,8 @@
   <DDAF_ConquestBattleStart>{0} 的軍隊正在進攻 {1} 的 {2}，戰鬥很快就會開始</DDAF_ConquestBattleStart>
   <DDAF_BaseSiegeChance>在據點地圖開戰的機率：{0}</DDAF_BaseSiegeChance>
   <DDAF_BaseSiegeChanceDesc>征服戰役改在依爭奪據點生成的地圖上進行：守方以地圖自帶的守軍據守基地（有安裝Custom Base Framework時使用它的基地，Better Settlement Defense的守軍戰術也會生效），攻方使用基本AI。設為0即關閉。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_BaseSiegeChanceDesc>
+  <DDAF_Pirates>海盜空降突襲強勢守方</DDAF_Pirates>
+  <DDAF_PiratesDesc>戰役中守方比攻方越強（例如防守完善的基地），越有可能有一個與雙方都敵對的海盜陣營以空投艙降落在守方陣地。差距＝1－攻方戰力÷守方戰力（以戰鬥人員的戰力計算，守方為攻方1.5倍時33%，2倍時50%，5倍時80%），既是觸發機率，也是海盜兵力佔征服威脅點數的比例，最多一半。海盜只為自己而戰，不影響戰役勝負。需要有工業時代以上的永久敵對陣營。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_PiratesDesc>
   <DDAF_KeepSurvivors>倖存者回到世界</DDAF_KeepSurvivors>
   <DDAF_KeepSurvivorsDesc>沒有殖民者參與的戰役結束時，存活的戰鬥人員會像離開地圖的襲擊者一樣成為世界人物，而不是被刪除，之後可能再出現在襲擊、商隊或其他戰役中。戰敗方倒地的人則會被勝方俘虜，日後可能加入勝方。此設定由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_KeepSurvivorsDesc>
   <DDAF_TechWeightedExpansion>低科技陣營較常擴張</DDAF_TechWeightedExpansion>

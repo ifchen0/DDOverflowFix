@@ -94,6 +94,7 @@ namespace DDOverflowFix
             GUI.color = Color.white;
             Text.Anchor = anchor;
             BaseSiege.DrawSetting(listing);
+            Patch_InitArenaMap_Pirates.DrawSetting(listing);
             ArenaSurvivors.DrawSetting(listing);
             Patch_Expansion_TechWeights.DrawSetting(listing);
             return value;

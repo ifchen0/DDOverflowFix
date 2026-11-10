@@ -46,6 +46,7 @@ namespace DDOverflowFix
                 PlayerDiplomacy.PerYear = Frequency.PercentToPerYear(chance);
             Frequency.ExposeData(__instance);
             Scribe_Values.Look(ref BaseSiege.Chance, "ddafBaseSiegeChance", BaseSiege.DefaultChance);
+            Scribe_Values.Look(ref Patch_InitArenaMap_Pirates.Enabled, "ddafPirates", true);
             Scribe_Values.Look(ref ArenaSurvivors.Enabled, "ddafKeepSurvivors", true);
             Scribe_Values.Look(ref Patch_Expansion_TechWeights.Enabled, "ddafTechWeightedExpansion", true);
         }
@@ -54,10 +55,10 @@ namespace DDOverflowFix
     [HarmonyPatch(typeof(NPCDiploSettings), nameof(NPCDiploSettings.DoSettingsWindowContents))]
     public static class Patch_NPCDiploSettings_PlayerDiplomacyOption
     {
-        // Player diplomacy rows, the per-year frequency rows (Frequency.cs), the settlement map chance (BaseSiege.cs)
+        // Player diplomacy rows, the per-year frequency rows (Frequency.cs), the settlement map chance (BaseSiege.cs), the pirates checkbox (ArenaPirates.cs),
         // the survivors checkbox (ArenaSurvivors.cs) and the tech-weighted expansion checkbox (ExpansionWeights.cs).
         // Plus room for warning notes that wrap a label onto a second line (SettingsWarnings.cs).
-        private const float ExtraHeight = 500f;
+        private const float ExtraHeight = 560f;
 
         private static readonly FieldInfo IdeoBloc = AccessTools.Field(typeof(NPCDiploModSettings), nameof(NPCDiploModSettings.repAllowIdeoBloc));
         private static readonly MethodInfo Drawer = AccessTools.Method(typeof(Patch_NPCDiploSettings_PlayerDiplomacyOption), nameof(CheckboxThenOption));
