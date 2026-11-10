@@ -10,25 +10,36 @@ using Verse.AI.Group;
 
 namespace DDOverflowFix
 {
-    /// <summary>Dynamic Diplomacy's dominance rule: more than 9 and at least 40% of all NPC settlements.</summary>
+    /// <summary>
+    /// A faction is dominant with more than 9 NPC settlements and at least 3 times the average NPC faction's count,
+    /// capped at Dynamic Diplomacy's 40% of all NPC settlements. Comparing with the average keeps the rule fair for
+    /// worlds with many factions, and two factions splitting the world both count.
+    /// </summary>
     internal static class Dominance
     {
-        public const float Share = 0.4f;
+        public const float MaxShare = 0.4f;
+        public const float TimesAverage = 3f;
         public const int MinSettlements = 9;
 
         public static bool IsDominant(Faction faction)
         {
             if (faction == null || faction.IsPlayer)
                 return false;
-            int total = 0, own = 0;
+            var counts = new Dictionary<Faction, int>();
+            int total = 0;
             foreach (Settlement s in Find.WorldObjects.Settlements)
             {
-                if (s.Faction == faction)
-                    own++;
-                if (s.Faction != null && !s.Faction.IsPlayer && s.Faction.def.settlementGenerationWeight > 0f && !s.def.defName.StartsWith("City_"))
-                    total++;
+                Faction owner = s.Faction;
+                if (owner == null || owner.IsPlayer || owner.def.settlementGenerationWeight <= 0f || s.def.defName.StartsWith("City_"))
+                    continue;
+                counts.TryGetValue(owner, out int n);
+                counts[owner] = n + 1;
+                total++;
             }
-            return own > MinSettlements && own >= total * Share;
+            if (!counts.TryGetValue(faction, out int own) || own <= MinSettlements)
+                return false;
+            float average = total / (float)counts.Count;
+            return own >= System.Math.Min(total * MaxShare, average * TimesAverage);
         }
     }
 
