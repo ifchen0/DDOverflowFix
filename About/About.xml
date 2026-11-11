@@ -16,6 +16,7 @@ Battles:
 - Optional: the stronger the defender, the likelier pirates drop in on it. The gap 1 - attacker / defender combat power is the chance and the pirates' share of the threat points, up to half. On by default.
 - Optional: survivors return to the world instead of being deleted, and downed losers become the winner's captives. Captives may join the captor (30 days), escape (60 days) or go free when the factions make peace or the captor is defeated; unwaveringly loyal ones never join. On by default.
 - Once one army flees, the other holds the field. A win for a settlement lost meanwhile changes nothing.
+- The "settlement razed" letter after a battle names the right conqueror (Dynamic Diplomacy had the two factions swapped).
 - Battle sites: no longer owned by you, listed in "Jump to location", and their pollution costs you no goodwill.
 
 Diplomacy:
