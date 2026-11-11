@@ -71,7 +71,23 @@ namespace DDOverflowFix
                 else
                     label = label + " " + "DDAF_ExpansionLimitCurrent".Translate(count).Colorize(Color.gray);
             }
-            return listing.Label(label, maxHeight, tooltip);
+            Rect rect = listing.Label(label, maxHeight, tooltip);
+            CleanupButton(listing, count);
+            return rect;
+        }
+
+        /// <summary>One-off cleanup down to 80% of the limit, shown in a game while the world is above that.</summary>
+        private static void CleanupButton(Listing_Standard listing, int count)
+        {
+            int target = SettlementCleanup.Target(DD.repMaxExpansionLimit);
+            if (count < 0 || count <= target)
+                return;
+            Rect row = listing.GetRect(30f);
+            Rect button = row.LeftPart(0.45f);
+            if (Widgets.ButtonText(button, "DDAF_SettlementCleanup".Translate(target)))
+                SettlementCleanup.Confirm(DD.repMaxExpansionLimit);
+            TooltipHandler.TipRegion(button, "DDAF_SettlementCleanupDesc".Translate(target, SettlementCleanup.MinKeep));
+            listing.Gap(4f);
         }
 
         public static void AllianceCheckbox(Listing_Standard listing, string label, ref bool checkOn, string tooltip, float height, float labelPct)

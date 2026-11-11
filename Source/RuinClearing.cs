@@ -39,7 +39,7 @@ namespace DDOverflowFix
             return true;
         }
 
-        private static int RoadLinks(PlanetTile tile) =>
+        public static int RoadLinks(PlanetTile tile) =>
             tile.Valid && Find.WorldGrid[tile] is SurfaceTile surface ? surface.potentialRoads?.Count ?? 0 : 0;
     }
 }

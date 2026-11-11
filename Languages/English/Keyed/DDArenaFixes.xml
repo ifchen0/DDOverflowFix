@@ -27,4 +27,9 @@
   <DDAF_ExpansionLimitCurrent>(world now: {0})</DDAF_ExpansionLimitCurrent>
   <DDAF_ExpansionLimitReached>(reached, world now: {0}, hover for details)</DDAF_ExpansionLimitReached>
   <DDAF_ExpansionLimitReachedDesc>The world already has {0} settlements, above this limit, so expansion has stopped, and tech-weighted expansion and ruin resettling with it. Raise the limit, or let razed settlements bring the count down. Warning added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_ExpansionLimitReachedDesc>
+  <DDAF_SettlementCleanup>Clear settlements down to {0}</DDAF_SettlementCleanup>
+  <DDAF_SettlementCleanupDesc>One-off cleanup to 80% of the expansion limit ({0} settlements), so expansion can run again. Each NPC faction gives up settlements in proportion to how many it has and keeps at least {1}. Settlements off the road network go first, road ends last. Each removed settlement leaves a ruin that is kept only on roads, like ruin clearing. Settlements you are involved with (maps, your caravans, quests, trade requests) are left alone. Added by Dynamic Diplomacy Fixes &amp; Tweaks.</DDAF_SettlementCleanupDesc>
+  <DDAF_SettlementCleanupConfirm>Remove settlements from {0} down to {1} (target {2})? Each NPC faction keeps at least {3}. This cannot be undone.</DDAF_SettlementCleanupConfirm>
+  <DDAF_SettlementCleanupNothing>No settlement can be removed: every faction is down to {0}, or the rest are in use by you.</DDAF_SettlementCleanupNothing>
+  <DDAF_SettlementCleanupDone>Removed {0} settlements; {1} ruins left on roads.</DDAF_SettlementCleanupDone>
 </LanguageData>

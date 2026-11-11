@@ -27,4 +27,9 @@
   <DDAF_ExpansionLimitCurrent>（目前世界：{0}）</DDAF_ExpansionLimitCurrent>
   <DDAF_ExpansionLimitReached>（已達上限，目前世界：{0}，滑鼠停留查看說明）</DDAF_ExpansionLimitReached>
   <DDAF_ExpansionLimitReachedDesc>世界上已有{0}個聚落，超過此上限，所以擴張已經停止，低科技陣營較常擴張與重建廢墟也會跟著失去作用。請提高上限，或靠據點遭直接摧毀來降低數量。此警告由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_ExpansionLimitReachedDesc>
+  <DDAF_SettlementCleanup>清理聚落至{0}個</DDAF_SettlementCleanup>
+  <DDAF_SettlementCleanupDesc>一次性清理到擴張上限的80%（{0}個聚落），讓擴張可以重新進行。各NPC陣營依自己的聚落數按比例移除，每個陣營至少保留{1}個。不在道路上的聚落最先移除，道路末端的最後。被移除的聚落會留下廢墟，和清除廢墟一樣只保留道路上的。與你有關的聚落（有地圖、你的商隊、任務、交易請求）不會被移除。此功能由Dynamic Diplomacy Fixes &amp; Tweaks加入。</DDAF_SettlementCleanupDesc>
+  <DDAF_SettlementCleanupConfirm>要將聚落從{0}個移除到{1}個（目標{2}個）嗎？每個NPC陣營至少保留{3}個。此操作無法復原。</DDAF_SettlementCleanupConfirm>
+  <DDAF_SettlementCleanupNothing>沒有可移除的聚落：每個陣營都只剩{0}個，或其餘聚落正與你有關。</DDAF_SettlementCleanupNothing>
+  <DDAF_SettlementCleanupDone>已移除{0}個聚落，道路上留下{1}個廢墟。</DDAF_SettlementCleanupDone>
 </LanguageData>

@@ -26,6 +26,7 @@ Unofficial fixes and tweaks for [url=https://steamcommunity.com/sharedfiles/file
 [*]The expanding faction is picked by tech level: tribal 1.5, medieval 1.3, industrial 1, spacer 0.8, ultra 0.6. On by default.
 [*]Half of the expansions resettle a ruin near an NPC settlement instead of a random tile.
 [*]Clearing ruins keeps ruins on roads, so roads do not end in empty land.
+[*]A button next to the expansion limit clears a world above it down to 80%: each faction in proportion, keeping at least 2, off-road settlements first, ruins kept on roads.
 [*]Conquered and razed settlements are destroyed the normal way, so other mods clean up after them (World Domination's buildings).
 [*]Event frequency settings go below the old 1% per 6 hours minimum, and the settings warn when an option has no effect.
 [/list]
