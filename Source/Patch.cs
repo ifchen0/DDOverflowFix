@@ -10,7 +10,7 @@ namespace DDOverflowFix
     {
         static Startup()
         {
-            new Harmony("ifchen0.ddoverflowfix").PatchAll();
+            new Harmony("ifchen0.ddoverflowfix").PatchAll(typeof(Startup).Assembly);
             PlayerDiplomacySettings.Reload();
             Frequency.ApplyBase();
         }
